@@ -1,0 +1,1082 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Malick — Développeur Full-Stack</title>
+<meta name="description" content="Portfolio de Malick, développeur full-stack junior à Thiès, Sénégal, spécialisé en backend, intégrations temps réel et mobile." />
+
+<!-- Seule dépendance externe autorisée : la police Google Fonts JetBrains Mono -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     TOKENS — palette et échelle. Thème sombre par défaut (identité
+     principale du site), thème clair dérivé pour les navigateurs /
+     préférences OS en clair.
+     ============================================================ */
+  :root {
+    --bg: #1a1b26;
+    --bg-titlebar: #16161e;
+    --bg-sidebar: #16161e;
+    --surface: #1f2335;
+    --surface-2: #24283b;
+    --border: #2a2e42;
+    --text: #c0caf5;
+    --text-dim: #8189b5;
+    --comment: #565f89;
+
+    --tok-kw: #bb9af7;
+    --tok-str: #9ece6a;
+    --tok-fn: #7aa2f7;
+    --tok-type: #2ac3de;
+    --tok-num: #ff9e64;
+    --tok-attr: #e0af68;
+
+    --accent: #7aa2f7;
+    --accent-soft: rgba(122, 162, 247, 0.14);
+    --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    --selection: rgba(122, 162, 247, 0.28);
+
+    --dot-red: #ff5f56;
+    --dot-yellow: #ffbd2e;
+    --dot-green: #27c93f;
+
+    --fs-code: 0.9rem;
+    --fs-ui: 0.8rem;
+    --fs-small: 0.7rem;
+    --titlebar-h: 38px;
+    --tabbar-h: 40px;
+    --statusbar-h: 26px;
+    --sidebar-w: 232px;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #fbfbfe;
+      --bg-titlebar: #eef0f7;
+      --bg-sidebar: #f2f3f9;
+      --surface: #ffffff;
+      --surface-2: #eceefa;
+      --border: #dcdfee;
+      --text: #2b2f4a;
+      --text-dim: #5b6084;
+      --comment: #8890b3;
+
+      --tok-kw: #7847c9;
+      --tok-str: #2f7d32;
+      --tok-fn: #2959c9;
+      --tok-type: #07838f;
+      --tok-num: #b3560c;
+      --tok-attr: #9a6a00;
+
+      --accent: #2959c9;
+      --accent-soft: rgba(41, 89, 201, 0.1);
+      --shadow: 0 12px 28px rgba(30, 32, 60, 0.12);
+      --selection: rgba(41, 89, 201, 0.16);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #1a1b26;
+    --bg-titlebar: #16161e;
+    --bg-sidebar: #16161e;
+    --surface: #1f2335;
+    --surface-2: #24283b;
+    --border: #2a2e42;
+    --text: #c0caf5;
+    --text-dim: #8189b5;
+    --comment: #565f89;
+    --tok-kw: #bb9af7;
+    --tok-str: #9ece6a;
+    --tok-fn: #7aa2f7;
+    --tok-type: #2ac3de;
+    --tok-num: #ff9e64;
+    --tok-attr: #e0af68;
+    --accent: #7aa2f7;
+    --accent-soft: rgba(122, 162, 247, 0.14);
+    --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    --selection: rgba(122, 162, 247, 0.28);
+  }
+
+  :root[data-theme="light"] {
+    --bg: #fbfbfe;
+    --bg-titlebar: #eef0f7;
+    --bg-sidebar: #f2f3f9;
+    --surface: #ffffff;
+    --surface-2: #eceefa;
+    --border: #dcdfee;
+    --text: #2b2f4a;
+    --text-dim: #5b6084;
+    --comment: #8890b3;
+    --tok-kw: #7847c9;
+    --tok-str: #2f7d32;
+    --tok-fn: #2959c9;
+    --tok-type: #07838f;
+    --tok-num: #b3560c;
+    --tok-attr: #9a6a00;
+    --accent: #2959c9;
+    --accent-soft: rgba(41, 89, 201, 0.1);
+    --shadow: 0 12px 28px rgba(30, 32, 60, 0.12);
+    --selection: rgba(41, 89, 201, 0.16);
+  }
+
+  /* ============================================================
+     RESET & BASE
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "JetBrains Mono", ui-monospace, "SF Mono", "Fira Code", Consolas, "Liberation Mono", monospace;
+    font-size: var(--fs-code);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--selection); }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+  ul { list-style: none; margin: 0; padding: 0; }
+
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  /* ============================================================
+     APP SHELL
+     ============================================================ */
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  /* ---- Barre de titre (fenêtre) ---- */
+  .titlebar {
+    height: var(--titlebar-h);
+    flex: 0 0 auto;
+    background: var(--bg-titlebar);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px;
+  }
+  .traffic-lights { display: flex; gap: 8px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .dot.red { background: var(--dot-red); }
+  .dot.yellow { background: var(--dot-yellow); }
+  .dot.green { background: var(--dot-green); }
+
+  .titlebar-path {
+    text-align: center;
+    font-size: var(--fs-small);
+    color: var(--text-dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .titlebar-path strong { color: var(--text); font-weight: 500; }
+
+  .menu-toggle {
+    display: none;
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: var(--text-dim);
+  }
+  .menu-toggle:hover { background: var(--surface-2); color: var(--text); }
+  .menu-toggle svg { width: 16px; height: 16px; }
+
+  /* ---- Zone de travail ---- */
+  .workspace {
+    flex: 1 1 auto;
+    display: flex;
+    min-height: 0;
+  }
+
+  /* ---- Sidebar (explorateur) ---- */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex: 0 0 auto;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    padding: 16px 0;
+    overflow-y: auto;
+  }
+  .sidebar-heading {
+    font-size: var(--fs-small);
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    padding: 4px 18px;
+    font-weight: 600;
+  }
+  .sidebar-heading.sub {
+    margin-top: 6px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .sidebar-heading.sub::before {
+    content: "▾";
+    font-size: 0.6rem;
+    color: var(--text-dim);
+  }
+  .file-list { padding: 2px 8px; }
+  .file-row { display: flex; align-items: center; gap: 2px; }
+  .file-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    margin: 1px 0;
+    border-radius: 5px;
+    font-size: var(--fs-ui);
+    color: var(--text-dim);
+    border-left: 2px solid transparent;
+    flex: 1 1 auto;
+    min-width: 0;
+    transition: background-color 0.12s ease, color 0.12s ease;
+  }
+  .file-link:hover { background: var(--surface-2); color: var(--text); }
+  .file-link.active {
+    background: var(--accent-soft);
+    color: var(--text);
+    border-left-color: var(--accent);
+  }
+  .file-dl {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    opacity: 0.65;
+  }
+  .file-dl:hover { background: var(--surface-2); color: var(--accent); opacity: 1; }
+  .file-dl-all {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: calc(100% - 16px);
+    margin: 14px 8px 0;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-size: var(--fs-ui);
+    color: var(--text-dim);
+    justify-content: center;
+  }
+  .file-dl-all:hover { color: var(--text); border-color: var(--accent); }
+  .file-icon {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .icon-js { background: rgba(224, 175, 104, 0.16); color: var(--tok-attr); }
+  .icon-json { background: rgba(158, 206, 106, 0.16); color: var(--tok-str); }
+  .icon-sh { background: rgba(122, 162, 247, 0.16); color: var(--tok-fn); }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 30;
+  }
+
+  /* ---- Colonne éditeur ---- */
+  .editor {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .tabbar {
+    flex: 0 0 auto;
+    height: var(--tabbar-h);
+    display: flex;
+    background: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabbar::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 16px;
+    font-size: var(--fs-ui);
+    color: var(--text-dim);
+    background: transparent;
+    border-right: 1px solid var(--border);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); background: var(--surface-2); }
+  .tab.active {
+    color: var(--text);
+    background: var(--bg);
+    border-bottom-color: var(--accent);
+  }
+
+  .editor-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--bg);
+  }
+
+  .statusbar {
+    flex: 0 0 auto;
+    height: var(--statusbar-h);
+    background: var(--accent);
+    color: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 14px;
+    font-size: 0.68rem;
+    font-weight: 600;
+  }
+  .status-spacer { flex: 1 1 auto; }
+
+  /* ============================================================
+     FICHIERS DE CODE
+     ============================================================ */
+  .code-file {
+    padding: 22px 0 48px;
+    border-bottom: 1px dashed var(--border);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .code-file.in-view { opacity: 1; transform: none; }
+  .code-file:last-child { border-bottom: none; }
+
+  .file-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 0 28px 14px;
+  }
+  .file-header .name { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+  .file-header .hint { font-size: var(--fs-small); color: var(--text-dim); }
+
+  .code-body {
+    overflow-x: auto;
+  }
+  .line {
+    display: flex;
+    padding: 0 28px;
+    min-height: 1.6em;
+  }
+  .line:hover { background: var(--surface-2); }
+  .ln {
+    flex: 0 0 auto;
+    width: 2.6em;
+    margin-right: 1.4em;
+    text-align: right;
+    color: var(--comment);
+    opacity: 0.7;
+    user-select: none;
+  }
+  .code { white-space: pre; }
+
+  .tok-kw { color: var(--tok-kw); }
+  .tok-str { color: var(--tok-str); }
+  .tok-fn { color: var(--tok-fn); }
+  .tok-type { color: var(--tok-type); }
+  .tok-num { color: var(--tok-num); }
+  .tok-attr { color: var(--tok-attr); }
+  .tok-cm, .tok-cm * { color: var(--comment); font-style: italic; }
+  .tok-punc { color: var(--text-dim); }
+  .tok-prompt { color: var(--tok-str); font-weight: 600; }
+  .tok-path { color: var(--tok-fn); }
+
+  .term-link {
+    color: var(--tok-fn);
+    border-bottom: 1px solid transparent;
+  }
+  .term-link:hover { border-bottom-color: var(--tok-fn); }
+
+  .cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.1em;
+    background: var(--tok-str);
+    vertical-align: text-bottom;
+    animation: blink 1.05s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Badges / puces réutilisées dans about.js et projects.js */
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; padding: 2px 28px 0; }
+  .chip {
+    font-size: var(--fs-small);
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    background: var(--surface);
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 860px) {
+    .menu-toggle { display: flex; }
+    .sidebar {
+      position: fixed;
+      top: var(--titlebar-h);
+      bottom: 0;
+      left: 0;
+      z-index: 40;
+      transform: translateX(-100%);
+      transition: transform 0.2s ease;
+      box-shadow: var(--shadow);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-overlay.open { display: block; }
+    .titlebar-path { display: none; }
+    .file-header, .line { padding-left: 16px; padding-right: 16px; }
+    .chip-row { padding-left: 16px; padding-right: 16px; }
+    :root { --fs-code: 0.82rem; }
+    .code { white-space: pre-wrap; word-break: break-word; }
+    .ln { width: 2em; margin-right: 0.9em; }
+  }
+
+  @media (max-width: 480px) {
+    .statusbar > span:not(.status-branch):not(.status-spacer) { display: none; }
+    .statusbar .status-file { display: inline; }
+  }
+
+  /* ============================================================
+     BOOT — séquence d'ouverture façon terminal, un seul moment
+     orchestré, jouée une fois au chargement.
+     ============================================================ */
+  .boot-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 1;
+    transition: opacity 0.45s ease;
+  }
+  .boot-overlay.boot-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .boot-lines {
+    margin: 0;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.85rem;
+    line-height: 1.85;
+    color: var(--tok-str);
+    white-space: pre-wrap;
+    min-width: min(360px, 80vw);
+  }
+  .boot-lines .l {
+    opacity: 0;
+    animation: boot-line-in 0.25s ease forwards;
+  }
+  .boot-lines .l.muted { color: var(--text-dim); }
+  .boot-lines .l.ok { color: var(--tok-fn); }
+  @keyframes boot-line-in {
+    from { opacity: 0; transform: translateY(3px); }
+    to { opacity: 1; transform: none; }
+  }
+  .boot-cursor {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    background: var(--tok-str);
+    vertical-align: text-bottom;
+    animation: blink 1s steps(1) infinite;
+  }
+  .boot-skip {
+    position: absolute;
+    bottom: 22px;
+    right: 26px;
+    font-family: var(--font, inherit);
+    font-size: var(--fs-small);
+    color: var(--text-dim);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 7px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .boot-skip:hover { color: var(--text); border-color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .boot-overlay { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="boot-overlay" id="bootOverlay" aria-hidden="true">
+  <pre class="boot-lines" id="bootLines"></pre>
+  <button class="boot-skip" id="bootSkip" type="button">passer →</button>
+</div>
+
+<div class="app">
+  <header class="titlebar">
+    <div class="traffic-lights">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+    </div>
+    <div class="titlebar-path" id="titlebarPath"><strong>about.js</strong> — portfolio — Visual Studio Code</div>
+    <button class="menu-toggle" id="menuToggle" aria-controls="sidebar" aria-expanded="false" aria-label="Ouvrir l'explorateur de fichiers">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </header>
+
+  <div class="workspace">
+    <nav class="sidebar" id="sidebar" aria-label="Explorateur de fichiers du portfolio">
+      <div class="sidebar-heading">EXPLORATEUR</div>
+      <div class="sidebar-heading sub">PORTFOLIO</div>
+      <ul class="file-list">
+        <li class="file-row">
+          <a href="#about" class="file-link" data-file="about"><span class="file-icon icon-js">JS</span>about.js</a>
+          <button class="file-dl" type="button" data-file="about" title="Télécharger about.js" aria-label="Télécharger about.js">⬇</button>
+        </li>
+        <li class="file-row">
+          <a href="#projects" class="file-link" data-file="projects"><span class="file-icon icon-js">JS</span>projects.js</a>
+          <button class="file-dl" type="button" data-file="projects" title="Télécharger projects.js" aria-label="Télécharger projects.js">⬇</button>
+        </li>
+        <li class="file-row">
+          <a href="#skills" class="file-link" data-file="skills"><span class="file-icon icon-json">{}</span>skills.json</a>
+          <button class="file-dl" type="button" data-file="skills" title="Télécharger skills.json" aria-label="Télécharger skills.json">⬇</button>
+        </li>
+        <li class="file-row">
+          <a href="#contact" class="file-link" data-file="contact"><span class="file-icon icon-sh">$</span>contact.sh</a>
+          <button class="file-dl" type="button" data-file="contact" title="Télécharger contact.sh" aria-label="Télécharger contact.sh">⬇</button>
+        </li>
+      </ul>
+      <button class="file-dl-all" type="button" id="downloadAll">⬇ Télécharger tout</button>
+    </nav>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="editor">
+      <div class="tabbar">
+        <a href="#about" class="tab" data-file="about"><span class="file-icon icon-js">JS</span>about.js</a>
+        <a href="#projects" class="tab" data-file="projects"><span class="file-icon icon-js">JS</span>projects.js</a>
+        <a href="#skills" class="tab" data-file="skills"><span class="file-icon icon-json">{}</span>skills.json</a>
+        <a href="#contact" class="tab" data-file="contact"><span class="file-icon icon-sh">$</span>contact.sh</a>
+      </div>
+
+      <div class="editor-scroll" id="editorScroll">
+        <section id="about" class="code-file" data-file="about">
+          <div class="file-header"><span class="name">about.js</span><span class="hint">— identité &amp; philosophie</span></div>
+          <div class="code-body"><div class="lines" id="linesAbout"></div></div>
+        </section>
+
+        <section id="projects" class="code-file" data-file="projects">
+          <div class="file-header"><span class="name">projects.js</span><span class="hint">— projets réalisés</span></div>
+          <div class="code-body"><div class="lines" id="linesProjects"></div></div>
+        </section>
+
+        <section id="skills" class="code-file" data-file="skills">
+          <div class="file-header"><span class="name">skills.json</span><span class="hint">— compétences par catégorie</span></div>
+          <div class="code-body"><div class="lines" id="linesSkills"></div></div>
+        </section>
+
+        <section id="contact" class="code-file" data-file="contact">
+          <div class="file-header"><span class="name">contact.sh</span><span class="hint">— me contacter</span></div>
+          <div class="code-body"><div class="lines" id="linesContact"></div></div>
+        </section>
+      </div>
+
+      <div class="statusbar">
+        <span class="status-branch">⎇ main</span>
+        <span class="status-file" id="statusFile">about.js</span>
+        <span class="status-spacer"></span>
+        <span id="statusLang">JavaScript</span>
+        <span>Espaces : 2</span>
+        <span>UTF-8</span>
+        <span>LF</span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     DONNÉES — source unique. Pour ajouter un élément, modifie
+     UNIQUEMENT les tableaux/objets ci-dessous : le rendu (numéros
+     de ligne, coloration syntaxique) est généré automatiquement.
+     ============================================================ */
+
+  const ABOUT = {
+    name: "Malick",
+    role: "Développeur Full-Stack",
+    location: "Thiès, Sénégal",
+    education: "Licence Informatique — UFR SATIC, Université Alioune Diop de Bambey (UADB)",
+    nextStep: "Master Informatique, spécialité IA / Big Data — Université Gaston Berger (UGB)",
+    focus: ["Backend", "Intégrations complexes", "Mobile"],
+  };
+
+  const PHILOSOPHY = [
+    "Faire fonctionner un système ne me suffit pas : je veux",
+    "comprendre pourquoi il fonctionne, jusqu'à pouvoir",
+    "l'expliquer et le reconstruire à froid. Le code le plus",
+    "solide que j'ai écrit, je ne l'ai jamais écrit seul.",
+    "C'est le plus souvent en binôme durable avec Alpha",
+    "Oumar Diallo.",
+  ];
+
+  const PROJECTS = [
+    {
+      title: "Douane Enchères SN",
+      desc: "Plateforme d'enchères en ligne pour les véhicules saisis par la douane, avec mises en temps réel pour les acheteurs du Port de Dakar.",
+      role: "Backend, application mobile compagnon, intégrations temps réel (Socket.io) pour les enchères en direct.",
+      stack: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Socket.io", "React Native"],
+      team: ["Alpha Oumar Diallo"],
+      extra: { grade: "16/20", deploiement: "Production — Render" },
+    },
+    {
+      title: "Natt-Bi (Tontine App)",
+      desc: "Application de gestion de tontines : cycles de cotisation, membres et suivi des tours de versement.",
+      role: "Modèles Eloquent, relations entre entités, vues Blade pour la gestion des cycles.",
+      stack: ["Laravel 11", "PostgreSQL", "Eloquent", "Blade"],
+      team: ["Alpha Oumar Diallo", "Sira", "El Hadj"],
+      extra: null,
+    },
+    {
+      title: "buntu-liggeey",
+      desc: "Application desktop de mise en relation pour l'emploi, pensée pour les jeunes sans réseau professionnel.",
+      role: "Modélisation UML du domaine, couche de persistance JDBC.",
+      stack: ["Java 21", "JavaFX", "JDBC", "MySQL"],
+      team: [],
+      extra: null,
+    },
+    // AJOUTER UN PROJET ICI ↓
+    // { title: "...", desc: "...", role: "...", stack: [...], team: [...], extra: { cle: "valeur" } },
+  ];
+
+  const SKILLS = {
+    backend: ["Node.js / Express", "Laravel", "API REST", "Socket.io", "Java"],
+    frontend_mobile: ["Next.js", "React", "React Native", "TypeScript", "JavaFX"],
+    data: ["PostgreSQL", "MySQL", "Prisma", "Eloquent ORM", "Modélisation UML"],
+    outils: ["Git / GitHub", "Docker", "Postman", "Render", "VS Code"],
+    // AJOUTER UNE COMPÉTENCE ICI ↓ (dans le tableau de la catégorie concernée,
+    // ou ajoute une nouvelle clé pour une nouvelle catégorie)
+    savoir_etre: ["Travail en binôme", "Curiosité technique", "Rigueur", "Autonomie"],
+  };
+
+  // À REMPLACER : coordonnées de contact réelles avant mise en ligne.
+  const CONTACT = [
+    { label: "email", value: "malick1.ba@uadb.edu.sn", href: "mailto:malick1.ba@uadb.edu.sn" },
+    { label: "github", value: "github.com/Dev-knowladge", href: "https://github.com/Dev-knowladge" },
+    { label: "linkedin", value: "linkedin.com/in/malick-ba", href: "https://linkedin.com/in/malick-ba" },
+    { label: "cv", value: "./cv-malick.pdf", href: "./cv-malick.pdf" },
+  ];
+
+  /* ============================================================
+     MOTEUR DE RENDU — coloration syntaxique + numéros de ligne
+     ============================================================ */
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+  const kw = (s) => `<span class="tok-kw">${esc(s)}</span>`;
+  const str = (s) => `<span class="tok-str">"${esc(s)}"</span>`;
+  const fnc = (s) => `<span class="tok-fn">${esc(s)}</span>`;
+  const num = (s) => `<span class="tok-num">${esc(s)}</span>`;
+  const attr = (s) => `<span class="tok-attr">${esc(s)}</span>`;
+  const jkey = (s) => `<span class="tok-attr">"${esc(s)}"</span>`;
+  const cm = (s) => `<span class="tok-cm">${esc(s)}</span>`;
+
+  function paint(elId, lines) {
+    const el = document.getElementById(elId);
+    el.innerHTML = lines
+      .map((l, i) => `<div class="line"><span class="ln">${i + 1}</span><span class="code">${l === "" ? "&nbsp;" : l}</span></div>`)
+      .join("");
+    return lines.length;
+  }
+
+  function renderAbout() {
+    const L = [];
+    L.push(cm("// about.js"));
+    L.push(cm("// Fiche d'identité, générée depuis les données ci-dessus."));
+    L.push("");
+    L.push(`${kw("const")} ${fnc("about")} = {`);
+    L.push(`&nbsp;&nbsp;${attr("name")}: ${str(ABOUT.name)},`);
+    L.push(`&nbsp;&nbsp;${attr("role")}: ${str(ABOUT.role)},`);
+    L.push(`&nbsp;&nbsp;${attr("location")}: ${str(ABOUT.location)},`);
+    L.push(`&nbsp;&nbsp;${attr("education")}: ${str(ABOUT.education)},`);
+    L.push(`&nbsp;&nbsp;${attr("nextStep")}: ${str(ABOUT.nextStep)}, ${cm("// en attente de réponse")}`);
+    L.push(`&nbsp;&nbsp;${attr("focus")}: [${ABOUT.focus.map((f) => str(f)).join(", ")}],`);
+    L.push(`};`);
+    L.push("");
+    L.push(cm("/**"));
+    L.push(cm(" * Philosophie"));
+    PHILOSOPHY.forEach((p) => L.push(cm(" * " + p)));
+    L.push(cm(" */"));
+    L.push("");
+    L.push(`${kw("export default")} ${fnc("about")};`);
+    return paint("linesAbout", L);
+  }
+
+  function renderProjects() {
+    const L = [];
+    L.push(cm("// projects.js"));
+    L.push(cm("// Un objet par projet. Voir le marqueur en bas du tableau."));
+    L.push("");
+    L.push(`${kw("const")} ${fnc("projects")} = [`);
+    PROJECTS.forEach((p) => {
+      L.push(`&nbsp;&nbsp;{`);
+      L.push(`&nbsp;&nbsp;&nbsp;&nbsp;${attr("title")}: ${str(p.title)},`);
+      L.push(`&nbsp;&nbsp;&nbsp;&nbsp;${attr("desc")}: ${str(p.desc)},`);
+      L.push(`&nbsp;&nbsp;&nbsp;&nbsp;${attr("role")}: ${str(p.role)},`);
+      L.push(`&nbsp;&nbsp;&nbsp;&nbsp;${attr("stack")}: [${p.stack.map((s) => str(s)).join(", ")}],`);
+      if (p.team && p.team.length) {
+        L.push(`&nbsp;&nbsp;&nbsp;&nbsp;${attr("team")}: [${p.team.map((s) => str(s)).join(", ")}],`);
+      }
+      if (p.extra) {
+        L.push(`&nbsp;&nbsp;&nbsp;&nbsp;${attr("extra")}: {`);
+        const entries = Object.entries(p.extra);
+        entries.forEach(([k, v], i) => {
+          const comma = i < entries.length - 1 ? "," : "";
+          L.push(`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${attr(k)}: ${str(v)}${comma}`);
+        });
+        L.push(`&nbsp;&nbsp;&nbsp;&nbsp;},`);
+      }
+      L.push(`&nbsp;&nbsp;},`);
+    });
+    L.push(`&nbsp;&nbsp;${cm("// AJOUTER UN PROJET ICI ↓")}`);
+    L.push(`];`);
+    L.push("");
+    L.push(`${kw("export default")} ${fnc("projects")};`);
+    return paint("linesProjects", L);
+  }
+
+  function renderSkills() {
+    const L = [];
+    L.push(cm("// skills.json"));
+    L.push(`{`);
+    const cats = Object.keys(SKILLS);
+    cats.forEach((cat, i) => {
+      const comma = i < cats.length - 1 ? "," : "";
+      L.push(`&nbsp;&nbsp;${jkey(cat)}: [${SKILLS[cat].map((s) => str(s)).join(", ")}]${comma}`);
+    });
+    L.push(`&nbsp;&nbsp;${cm("// AJOUTER UNE COMPÉTENCE ICI ↓ (dans la bonne catégorie)")}`);
+    L.push(`}`);
+    return paint("linesSkills", L);
+  }
+
+  function renderContact() {
+    const L = [];
+    L.push(cm("#!/bin/bash"));
+    L.push(cm("# contact.sh : coordonnées"));
+    L.push("");
+    L.push(`<span class="tok-prompt">malick@dev</span><span class="tok-punc">:</span><span class="tok-path">~</span><span class="tok-punc">$</span> ${fnc("./contact.sh")}`);
+    L.push("");
+    const width = Math.max(...CONTACT.map((c) => c.label.length)) + 4;
+    CONTACT.forEach((c) => {
+      const pad = "&nbsp;".repeat(width - c.label.length);
+      const external = c.href.startsWith("http") ? ' target="_blank" rel="noopener noreferrer"' : "";
+      L.push(`${attr(c.label)}${pad}<a class="term-link" href="${esc(c.href)}"${external}>${esc(c.value)}</a>`);
+    });
+    L.push("");
+    L.push(`<span class="tok-prompt">malick@dev</span><span class="tok-punc">:</span><span class="tok-path">~</span><span class="tok-punc">$</span> <span class="cursor" aria-hidden="true"></span>`);
+    return paint("linesContact", L);
+  }
+
+  /* ============================================================
+     EXPORT — reconstruit chaque fichier en texte brut réel,
+     à partir des mêmes DONNÉES, pour le téléchargement.
+     ============================================================ */
+
+  function plainAbout() {
+    return [
+      "// about.js",
+      "// Fiche d'identité, générée depuis les données ci-dessus.",
+      "",
+      "const about = {",
+      `  name: "${ABOUT.name}",`,
+      `  role: "${ABOUT.role}",`,
+      `  location: "${ABOUT.location}",`,
+      `  education: "${ABOUT.education}",`,
+      `  nextStep: "${ABOUT.nextStep}", // en attente de réponse`,
+      `  focus: [${ABOUT.focus.map((f) => `"${f}"`).join(", ")}],`,
+      "};",
+      "",
+      "/**",
+      " * Philosophie",
+      ...PHILOSOPHY.map((p) => ` * ${p}`),
+      " */",
+      "",
+      "export default about;",
+      "",
+    ].join("\n");
+  }
+
+  function plainProjects() {
+    const lines = ["// projects.js", "// Un objet par projet. Voir le marqueur en bas du tableau.", "", "const projects = ["];
+    PROJECTS.forEach((p) => {
+      lines.push("  {");
+      lines.push(`    title: "${p.title}",`);
+      lines.push(`    desc: "${p.desc}",`);
+      lines.push(`    role: "${p.role}",`);
+      lines.push(`    stack: [${p.stack.map((s) => `"${s}"`).join(", ")}],`);
+      if (p.team && p.team.length) lines.push(`    team: [${p.team.map((s) => `"${s}"`).join(", ")}],`);
+      if (p.extra) {
+        lines.push("    extra: {");
+        const entries = Object.entries(p.extra);
+        entries.forEach(([k, v], i) => lines.push(`      ${k}: "${v}"${i < entries.length - 1 ? "," : ""}`));
+        lines.push("    },");
+      }
+      lines.push("  },");
+    });
+    lines.push("  // AJOUTER UN PROJET ICI ↓");
+    lines.push("];", "", "export default projects;", "");
+    return lines.join("\n");
+  }
+
+  function plainSkills() {
+    const lines = ["// skills.json", "{"];
+    const cats = Object.keys(SKILLS);
+    cats.forEach((cat, i) => {
+      const comma = i < cats.length - 1 ? "," : "";
+      lines.push(`  "${cat}": [${SKILLS[cat].map((s) => `"${s}"`).join(", ")}]${comma}`);
+    });
+    lines.push("  // AJOUTER UNE COMPÉTENCE ICI ↓ (dans la bonne catégorie)");
+    lines.push("}", "");
+    return lines.join("\n");
+  }
+
+  function plainContact() {
+    const lines = ["#!/bin/bash", "# contact.sh : coordonnées", "", "malick@dev:~$ ./contact.sh", ""];
+    const width = Math.max(...CONTACT.map((c) => c.label.length)) + 4;
+    CONTACT.forEach((c) => lines.push(`${c.label}${" ".repeat(width - c.label.length)}${c.value}`));
+    lines.push("", "malick@dev:~$");
+    return lines.join("\n");
+  }
+
+  const EXPORTS = {
+    about: { name: "about.js", build: plainAbout, mime: "text/javascript" },
+    projects: { name: "projects.js", build: plainProjects, mime: "text/javascript" },
+    skills: { name: "skills.json", build: plainSkills, mime: "application/json" },
+    contact: { name: "contact.sh", build: plainContact, mime: "text/x-sh" },
+  };
+
+  function downloadFile(name, content, mime) {
+    const blob = new Blob([content], { type: `${mime};charset=utf-8` });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function downloadOne(fileId) {
+    const spec = EXPORTS[fileId];
+    if (!spec) return;
+    downloadFile(spec.name, spec.build(), spec.mime);
+  }
+
+  function downloadAllFiles() {
+    Object.keys(EXPORTS).forEach((fileId, i) => {
+      setTimeout(() => downloadOne(fileId), i * 220);
+    });
+  }
+
+  /* ============================================================
+     NAVIGATION — synchronisation sidebar / onglets / barre d'état
+     ============================================================ */
+
+  const FILE_META = {
+    about: { name: "about.js", lang: "JavaScript" },
+    projects: { name: "projects.js", lang: "JavaScript" },
+    skills: { name: "skills.json", lang: "JSON" },
+    contact: { name: "contact.sh", lang: "Shell Script" },
+  };
+
+  const statusFile = document.getElementById("statusFile");
+  const statusLang = document.getElementById("statusLang");
+  const titlebarPath = document.getElementById("titlebarPath");
+  const sidebarLinks = Array.from(document.querySelectorAll(".file-link"));
+  const tabs = Array.from(document.querySelectorAll(".tab"));
+
+  function setActive(fileId) {
+    const meta = FILE_META[fileId];
+    if (!meta) return;
+    sidebarLinks.forEach((l) => l.classList.toggle("active", l.dataset.file === fileId));
+    tabs.forEach((t) => t.classList.toggle("active", t.dataset.file === fileId));
+    statusFile.textContent = meta.name;
+    statusLang.textContent = meta.lang;
+    titlebarPath.innerHTML = `<strong>${meta.name}</strong> — portfolio — Visual Studio Code`;
+  }
+
+  const sections = Array.from(document.querySelectorAll(".code-file"));
+  const observer = new IntersectionObserver(
+    (entries) => {
+      let best = null;
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+        }
+      });
+      if (best) setActive(best.target.dataset.file);
+    },
+    { root: document.getElementById("editorScroll"), threshold: [0.15, 0.35, 0.6] }
+  );
+  sections.forEach((s) => observer.observe(s));
+
+  /* ---- Apparition douce des fichiers au scroll ---- */
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { root: document.getElementById("editorScroll"), threshold: 0.12 }
+  );
+  sections.forEach((s) => revealObserver.observe(s));
+
+  /* ---- Tiroir mobile ---- */
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+  const menuToggle = document.getElementById("menuToggle");
+
+  function closeDrawer() {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }
+  function toggleDrawer() {
+    const open = sidebar.classList.toggle("open");
+    overlay.classList.toggle("open", open);
+    menuToggle.setAttribute("aria-expanded", String(open));
+  }
+  menuToggle.addEventListener("click", toggleDrawer);
+  overlay.addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeDrawer();
+  });
+  sidebarLinks.forEach((l) => l.addEventListener("click", closeDrawer));
+
+  /* ---- Téléchargement des fichiers source ---- */
+  document.querySelectorAll(".file-dl").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      downloadOne(btn.dataset.file);
+    });
+  });
+  const downloadAllBtn = document.getElementById("downloadAll");
+  if (downloadAllBtn) downloadAllBtn.addEventListener("click", downloadAllFiles);
+
+  /* ---- Séquence de démarrage (un seul moment orchestré) ---- */
+  function bootSequence() {
+    const overlay = document.getElementById("bootOverlay");
+    const linesEl = document.getElementById("bootLines");
+    const skipBtn = document.getElementById("bootSkip");
+    if (!overlay || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (overlay) overlay.remove();
+      return;
+    }
+
+    const LINES = [
+      ["$ ssh malick@thies-senegal", ""],
+      ["Bienvenue sur portfolio-malick (v1.0.0)", "muted"],
+      ["$ code .", ""],
+      ["Chargement de l'espace de travail…", "muted"],
+      ["✓ about.js", "ok"],
+      ["✓ projects.js", "ok"],
+      ["✓ skills.json", "ok"],
+      ["✓ contact.sh", "ok"],
+    ];
+    const STEP = 150;
+    linesEl.innerHTML =
+      LINES.map(([text, cls], i) => `<span class="l ${cls}" style="animation-delay:${120 + i * STEP}ms">${text}</span>`).join("\n") +
+      `\n<span class="boot-cursor" aria-hidden="true" style="animation-delay:${120 + LINES.length * STEP}ms"></span>`;
+
+    let dismissed = false;
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
+      overlay.classList.add("boot-hidden");
+      window.setTimeout(() => overlay.remove(), 500);
+    }
+    skipBtn.addEventListener("click", dismiss);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) dismiss(); });
+    document.addEventListener("keydown", function onKey(e) {
+      if (e.key === "Escape") { dismiss(); document.removeEventListener("keydown", onKey); }
+    });
+    window.setTimeout(dismiss, 120 + LINES.length * STEP + 900);
+  }
+
+  /* ---- Clin d'œil sur l'onglet quand on part voir ailleurs ---- */
+  function tabTitleEasterEgg() {
+    const original = document.title;
+    document.addEventListener("visibilitychange", () => {
+      document.title = document.hidden ? "Reviens vite 👋" : original;
+    });
+  }
+
+  /* ============================================================
+     INITIALISATION
+     ============================================================ */
+  renderAbout();
+  renderProjects();
+  renderSkills();
+  renderContact();
+  bootSequence();
+  tabTitleEasterEgg();
+})();
+</script>
+</body>
+</html>

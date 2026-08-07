@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Malick Ba — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body {
+    font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    color: #1c231f;
+    font-size: 10.3pt;
+    line-height: 1.5;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    display: grid;
+    grid-template-columns: 62mm 1fr;
+  }
+  .sidebar {
+    background: #14211c;
+    color: #eef1ea;
+    padding: 14mm 9mm;
+  }
+  .main { padding: 14mm 12mm 14mm 10mm; }
+
+  .name {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 700;
+    font-size: 19pt;
+    line-height: 1.1;
+    color: #ffffff;
+    text-wrap: balance;
+  }
+  .role {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 11.5pt;
+    color: #7fd4ba;
+    margin-top: 3mm;
+  }
+
+  .sb-section { margin-top: 9mm; }
+  .sb-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 7.6pt;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #8fa89c;
+    margin-bottom: 2.5mm;
+  }
+  .contact-item {
+    display: block;
+    font-size: 8.6pt;
+    color: #eef1ea;
+    text-decoration: none;
+    word-break: break-word;
+    margin-bottom: 2mm;
+    line-height: 1.4;
+  }
+  .contact-item span { display: block; font-size: 7.3pt; color: #8fa89c; }
+
+  .skill-group { margin-bottom: 5mm; }
+  .skill-group h4 {
+    margin: 0 0 1.6mm;
+    font-size: 8.2pt;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  .skill-group p { margin: 0; font-size: 8.4pt; color: #cdd8d0; line-height: 1.55; }
+
+  .edu-item { margin-bottom: 5mm; }
+  .edu-item .deg { font-size: 8.7pt; font-weight: 600; color: #fff; line-height: 1.4; }
+  .edu-item .inst { font-size: 8.2pt; color: #b7c4bc; margin-top: 1mm; line-height: 1.4; }
+  .edu-item .tag {
+    display: inline-block;
+    margin-top: 1.8mm;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 6.8pt;
+    color: #14211c;
+    background: #e3a75b;
+    padding: 1.2mm 2mm;
+    border-radius: 2mm;
+  }
+
+  .m-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 7.8pt;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #2f6d5e;
+    font-weight: 600;
+    margin: 0 0 3mm;
+    padding-bottom: 2mm;
+    border-bottom: 1px solid #dde2dc;
+  }
+  .m-section { margin-bottom: 8mm; }
+  .m-section:last-child { margin-bottom: 0; }
+  .profil-text { font-size: 9.6pt; color: #333c36; line-height: 1.65; margin: 0; }
+  .profil-text strong { color: #14211c; }
+
+  .project { margin-bottom: 6.5mm; }
+  .project:last-child { margin-bottom: 0; }
+  .project-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4mm;
+  }
+  .project-title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 11pt;
+    color: #14211c;
+  }
+  .project-note {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 7.6pt;
+    color: #2f6d5e;
+    white-space: nowrap;
+  }
+  .project-desc { font-size: 9.1pt; color: #444d47; margin: 1.6mm 0 2mm; line-height: 1.55; }
+  .project-role { font-size: 8.6pt; color: #2f6d5e; margin: 0 0 2mm; }
+  .project-role b { color: #14211c; font-weight: 600; }
+  .stack-row { display: flex; flex-wrap: wrap; gap: 1.6mm; }
+  .stack-chip {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 7.3pt;
+    color: #33463d;
+    background: #eef1ea;
+    border: 1px solid #dde2dc;
+    padding: 0.8mm 2mm;
+    border-radius: 2mm;
+  }
+  .project-team { font-size: 7.8pt; color: #7c877f; margin-top: 2mm; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="name">Malick Ba</div>
+      <div class="role">Développeur Full-Stack</div>
+
+      <div class="sb-section">
+        <div class="sb-label">Contact</div>
+        <a class="contact-item" href="mailto:malick1.ba@uadb.edu.sn">malick1.ba@uadb.edu.sn</a>
+        <a class="contact-item" href="https://github.com/Dev-knowladge">github.com/Dev-knowladge</a>
+        <a class="contact-item" href="https://linkedin.com/in/malick-ba">linkedin.com/in/malick-ba</a>
+        <span class="contact-item" style="margin-bottom:0;">Thiès, Sénégal</span>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-label">Formation</div>
+        <div class="edu-item">
+          <div class="deg">Licence Informatique</div>
+          <div class="inst">UFR SATIC — Université Alioune Diop de Bambey (UADB)</div>
+        </div>
+        <div class="edu-item">
+          <div class="deg">Master Informatique — IA / Big Data</div>
+          <div class="inst">Université Gaston Berger (UGB)</div>
+          <span class="tag">Candidature en attente</span>
+        </div>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-label">Compétences</div>
+        <div class="skill-group">
+          <h4>Backend</h4>
+          <p>Node.js / Express, Laravel, API REST, Socket.io, Java</p>
+        </div>
+        <div class="skill-group">
+          <h4>Frontend &amp; Mobile</h4>
+          <p>Next.js, React, React Native, TypeScript, JavaFX</p>
+        </div>
+        <div class="skill-group">
+          <h4>Data</h4>
+          <p>PostgreSQL, MySQL, Prisma, Eloquent ORM, Modélisation UML</p>
+        </div>
+        <div class="skill-group">
+          <h4>Outils</h4>
+          <p>Git / GitHub, Docker, Postman, Render, VS Code</p>
+        </div>
+        <div class="skill-group">
+          <h4>Savoir-être</h4>
+          <p>Travail en binôme, Curiosité technique, Rigueur, Autonomie</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="m-section">
+        <div class="m-label">Profil</div>
+        <p class="profil-text">
+          Développeur full-stack junior basé à Thiès, spécialisé en <strong>backend</strong>,
+          <strong>intégrations temps réel</strong> et <strong>mobile</strong>. Faire fonctionner un
+          système ne me suffit pas : je cherche à comprendre pourquoi il fonctionne, jusqu'à pouvoir
+          l'expliquer et le reconstruire à froid. Je travaille souvent en binôme durable, notamment
+          avec Alpha Oumar Diallo.
+        </p>
+      </div>
+
+      <div class="m-section">
+        <div class="m-label">Projets</div>
+
+        <div class="project">
+          <div class="project-head">
+            <span class="project-title">Douane Enchères SN</span>
+            <span class="project-note">Note : 16/20 · Production — Render</span>
+          </div>
+          <p class="project-desc">
+            Plateforme d'enchères en ligne pour les véhicules saisis par la douane, avec mises en
+            temps réel pour les acheteurs du Port de Dakar.
+          </p>
+          <p class="project-role"><b>Rôle :</b> Backend, application mobile compagnon, intégrations temps réel (Socket.io) pour les enchères en direct.</p>
+          <div class="stack-row">
+            <span class="stack-chip">Next.js</span>
+            <span class="stack-chip">TypeScript</span>
+            <span class="stack-chip">PostgreSQL</span>
+            <span class="stack-chip">Prisma</span>
+            <span class="stack-chip">Socket.io</span>
+            <span class="stack-chip">React Native</span>
+          </div>
+          <div class="project-team">Réalisé avec Alpha Oumar Diallo</div>
+        </div>
+
+        <div class="project">
+          <div class="project-head">
+            <span class="project-title">Natt-Bi (Tontine App)</span>
+          </div>
+          <p class="project-desc">
+            Application de gestion de tontines : cycles de cotisation, membres et suivi des tours
+            de versement.
+          </p>
+          <p class="project-role"><b>Rôle :</b> Modèles Eloquent, relations entre entités, vues Blade pour la gestion des cycles.</p>
+          <div class="stack-row">
+            <span class="stack-chip">Laravel 11</span>
+            <span class="stack-chip">PostgreSQL</span>
+            <span class="stack-chip">Eloquent</span>
+            <span class="stack-chip">Blade</span>
+          </div>
+          <div class="project-team">Réalisé avec Alpha Oumar Diallo, Sira, El Hadj</div>
+        </div>
+
+        <div class="project">
+          <div class="project-head">
+            <span class="project-title">buntu-liggeey</span>
+          </div>
+          <p class="project-desc">
+            Application desktop de mise en relation pour l'emploi, pensée pour les jeunes sans
+            réseau professionnel.
+          </p>
+          <p class="project-role"><b>Rôle :</b> Modélisation UML du domaine, couche de persistance JDBC.</p>
+          <div class="stack-row">
+            <span class="stack-chip">Java 21</span>
+            <span class="stack-chip">JavaFX</span>
+            <span class="stack-chip">JDBC</span>
+            <span class="stack-chip">MySQL</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
