@@ -457,6 +457,139 @@
   }
   .card-meta .extra { color: var(--accent); font-weight: 500; }
 
+  .project-cover {
+    position: relative;
+    display: block;
+    margin: -26px -24px 0;
+    padding: 0;
+    border: none;
+    cursor: zoom-in;
+    background: var(--paper);
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+  }
+  .project-cover img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+  .project-cover:hover img { transform: scale(1.05); }
+  .project-cover-count {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: color-mix(in srgb, var(--ink) 78%, transparent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .project-thumbs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 1px;
+  }
+  .project-thumb {
+    flex: 0 0 auto;
+    width: 52px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.15s ease, border-color 0.15s ease;
+  }
+  .project-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .project-thumb:hover, .project-thumb.active { opacity: 1; border-color: var(--accent); }
+
+  /* ---- Lightbox galerie projet ---- */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: color-mix(in srgb, var(--ink) 88%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .lightbox-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .lightbox-figure {
+    position: relative;
+    max-width: min(1100px, 100%);
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .lightbox-img-wrap {
+    max-width: 100%;
+    max-height: 74vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .lightbox-img-wrap img {
+    max-width: 100%;
+    max-height: 74vh;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    cursor: zoom-in;
+    transition: transform 0.25s ease;
+    background: var(--surface);
+  }
+  .lightbox-img-wrap img.zoomed { cursor: zoom-out; transform: scale(1.55); }
+  .lightbox-caption {
+    color: var(--paper);
+    font-size: 0.82rem;
+    text-align: center;
+    max-width: 62ch;
+    opacity: 0.85;
+  }
+  .lightbox-counter {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: color-mix(in srgb, var(--paper) 68%, transparent);
+  }
+  .lightbox-close,
+  .lightbox-nav {
+    position: fixed;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--ink) 65%, transparent);
+    color: var(--paper);
+    border: 1px solid color-mix(in srgb, var(--paper) 20%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox-close:hover, .lightbox-nav:hover { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .lightbox-close { top: 20px; right: 20px; width: 38px; height: 38px; font-size: 1rem; }
+  .lightbox-nav { top: 50%; transform: translateY(-50%); width: 46px; height: 46px; font-size: 1.2rem; }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+  .lightbox-nav[hidden] { display: none; }
+
+  @media (max-width: 720px) {
+    .lightbox-overlay { padding: 16px; }
+    .lightbox-close { top: 12px; right: 12px; width: 34px; height: 34px; }
+    .lightbox-nav { width: 38px; height: 38px; }
+    .lightbox-prev { left: 8px; }
+    .lightbox-next { right: 8px; }
+  }
+
   /* ---- Skills ---- */
   .skills-grid {
     display: grid;
@@ -816,31 +949,47 @@
      ============================================================ */
   const PROJECTS = [
     {
+      id: "douane-encheres",
       title: "Douane Enchères SN",
       desc: "Plateforme d'enchères en ligne pour les véhicules saisis par la douane, avec mises en temps réel pour les acheteurs du Port de Dakar.",
       role: "Backend, application mobile compagnon, intégrations temps réel (Socket.io).",
       stack: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Socket.io", "React Native"],
       team: ["Alpha Oumar Diallo"],
       extra: [["Note", "16/20"], ["Déploiement", "Production — Render"]],
+      images: [
+        { src: "assets/projects/douane-encheres/01-dashboard-igf.png", alt: "Tableau de bord agent IGF de Douane Enchères SN, avec adjudications, cautions séquestrées et conformité des paiements" },
+        { src: "assets/projects/douane-encheres/02-dashboard-agent.png", alt: "Tableau de bord d'un agent douane sur Douane Enchères SN, avec les voitures à traiter et les sessions en cours" },
+        { src: "assets/projects/douane-encheres/03-liste-voitures.png", alt: "Liste des voitures saisies enregistrées sur Douane Enchères SN, avec statut et prix de départ" },
+      ],
     },
     {
+      id: "natt-bi",
       title: "Natt-Bi (Tontine App)",
       desc: "Application de gestion de tontines : cycles de cotisation, membres et suivi des tours de versement.",
       role: "Modèles Eloquent, relations entre entités, vues Blade pour la gestion des cycles.",
       stack: ["Laravel 11", "PostgreSQL", "Eloquent", "Blade"],
       team: ["Alpha Oumar Diallo", "Sira", "El Hadj"],
       extra: [],
+      images: [
+        { src: "assets/projects/natt-bi/01-dashboard-admin.png", alt: "Tableau de bord administrateur de Natt-Bi, avec membres, tontines actives et cotisations récentes" },
+        { src: "assets/projects/natt-bi/02-landing-page.png", alt: "Page d'accueil de Natt-Bi présentant la plateforme de gestion collaborative de tontines" },
+      ],
     },
     {
+      id: "buntu-liggeey",
       title: "buntu-liggeey",
       desc: "Application desktop de mise en relation pour l'emploi, pensée pour les jeunes sans réseau professionnel.",
       role: "Modélisation UML du domaine, couche de persistance JDBC.",
       stack: ["Java 21", "JavaFX", "JDBC", "MySQL"],
       team: [],
       extra: [],
+      images: [
+        { src: "assets/projects/buntu-liggeey/01-dashboard-admin.png", alt: "Tableau de bord administrateur de buntu-liggeey, avec statistiques des talents, entreprises et offres" },
+      ],
     },
-    // AJOUTER UN PROJET ICI ↓
+    // AJOUTER UN PROJET ICI ↓ (ajoute aussi un tableau "images" : [{ src, alt }])
   ];
+  window.PROJECTS_DATA = PROJECTS;
 
   const SKILLS = {
     "Backend": ["Node.js / Express", "Laravel", "API REST", "Socket.io", "Java"],
@@ -864,8 +1013,26 @@
 
   function renderProjects() {
     const grid = document.getElementById("projectGrid");
-    grid.innerHTML = PROJECTS.map((p) => `
+    grid.innerHTML = PROJECTS.map((p, pi) => {
+      const imgs = p.images || [];
+      const cover = imgs[0];
+      const thumbs = imgs.length > 1
+        ? `<div class="project-thumbs" role="group" aria-label="Aperçus supplémentaires — ${esc(p.title)}">
+            ${imgs.map((im, ii) => `
+              <button type="button" class="project-thumb${ii === 0 ? " active" : ""}" data-project="${pi}" data-index="${ii}" aria-label="Voir l'image ${ii + 1} sur ${imgs.length} — ${esc(p.title)}">
+                <img src="${esc(im.src)}" alt="" loading="lazy" width="120" height="75" />
+              </button>
+            `).join("")}
+          </div>`
+        : "";
+      return `
       <article class="project-card">
+        ${cover ? `
+        <button type="button" class="project-cover" data-project="${pi}" data-index="0" aria-label="Voir la galerie — ${esc(p.title)}">
+          <img src="${esc(cover.src)}" alt="${esc(cover.alt)}" loading="lazy" width="640" height="400" />
+          ${imgs.length > 1 ? `<span class="project-cover-count">🖼 ${imgs.length}</span>` : ""}
+        </button>` : ""}
+        ${thumbs}
         <h3>${esc(p.title)}</h3>
         <p class="desc">${esc(p.desc)}</p>
         <p class="role"><b>Mon rôle</b>${esc(p.role)}</p>
@@ -875,7 +1042,14 @@
           ${p.extra.map(([k, v]) => `<span class="extra">${esc(k)} : ${esc(v)}</span>`).join("")}
         </div>
       </article>
-    `).join("");
+    `;
+    }).join("");
+
+    grid.querySelectorAll(".project-cover, .project-thumb").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        openGallery(Number(btn.dataset.project), Number(btn.dataset.index));
+      });
+    });
   }
 
   function renderSkills() {
@@ -969,6 +1143,110 @@
       hero.style.setProperty("--my", 0);
     });
   }
+})();
+</script>
+
+<div class="lightbox-overlay" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="Galerie du projet">
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Fermer la galerie">✕</button>
+  <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Image précédente">←</button>
+  <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Image suivante">→</button>
+  <figure class="lightbox-figure">
+    <div class="lightbox-img-wrap">
+      <img id="lightboxImg" src="" alt="" />
+    </div>
+    <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </figure>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  const overlay = document.getElementById("lightboxOverlay");
+  const imgEl = document.getElementById("lightboxImg");
+  const captionEl = document.getElementById("lightboxCaption");
+  const counterEl = document.getElementById("lightboxCounter");
+  const closeBtn = document.getElementById("lightboxClose");
+  const prevBtn = document.getElementById("lightboxPrev");
+  const nextBtn = document.getElementById("lightboxNext");
+
+  let currentProject = null;
+  let currentIndex = 0;
+  let lastFocused = null;
+  let touchStartX = null;
+
+  function imagesFor(pi) {
+    const p = window.PROJECTS_DATA && window.PROJECTS_DATA[pi];
+    return p ? p.images || [] : [];
+  }
+
+  function renderCurrent() {
+    const imgs = imagesFor(currentProject);
+    if (!imgs.length) return;
+    const im = imgs[currentIndex];
+    imgEl.src = im.src;
+    imgEl.alt = im.alt;
+    imgEl.classList.remove("zoomed");
+    captionEl.textContent = im.alt;
+    counterEl.textContent = imgs.length > 1 ? `${currentIndex + 1} / ${imgs.length}` : "";
+    const multi = imgs.length > 1;
+    prevBtn.hidden = !multi;
+    nextBtn.hidden = !multi;
+
+    document.querySelectorAll(`.project-thumb[data-project="${currentProject}"]`).forEach((t, i) => {
+      t.classList.toggle("active", i === currentIndex);
+    });
+  }
+
+  window.openGallery = function (projectIndex, imageIndex) {
+    currentProject = projectIndex;
+    currentIndex = imageIndex || 0;
+    renderCurrent();
+    lastFocused = document.activeElement;
+    overlay.classList.add("open");
+    closeBtn.focus();
+    document.addEventListener("keydown", onKeydown);
+  };
+
+  function closeGallery() {
+    overlay.classList.remove("open");
+    document.removeEventListener("keydown", onKeydown);
+    if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+  }
+
+  function step(delta) {
+    const imgs = imagesFor(currentProject);
+    if (imgs.length < 2) return;
+    currentIndex = (currentIndex + delta + imgs.length) % imgs.length;
+    renderCurrent();
+  }
+
+  function onKeydown(e) {
+    if (e.key === "Escape") { closeGallery(); return; }
+    if (e.key === "ArrowLeft") { step(-1); return; }
+    if (e.key === "ArrowRight") { step(1); return; }
+    if (e.key === "Tab") {
+      const focusable = [closeBtn, prevBtn, nextBtn].filter((el) => !el.hidden);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+
+  closeBtn.addEventListener("click", closeGallery);
+  prevBtn.addEventListener("click", () => step(-1));
+  nextBtn.addEventListener("click", () => step(1));
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) closeGallery(); });
+  imgEl.addEventListener("click", () => imgEl.classList.toggle("zoomed"));
+
+  overlay.addEventListener("touchstart", (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+  overlay.addEventListener("touchend", (e) => {
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) step(dx > 0 ? -1 : 1);
+    touchStartX = null;
+  }, { passive: true });
 })();
 </script>
 
