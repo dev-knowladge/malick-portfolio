@@ -212,12 +212,18 @@
     inset: -20px;
     background-image: radial-gradient(var(--border) 1px, transparent 1px);
     background-size: 26px 26px;
+    background-position: 0 0;
     -webkit-mask-image: linear-gradient(to bottom, black, transparent 78%);
     mask-image: linear-gradient(to bottom, black, transparent 78%);
     opacity: 0.55;
     pointer-events: none;
     transform: translate(calc(var(--mx, 0) * 12px), calc(var(--my, 0) * 12px));
     transition: transform 0.3s ease-out;
+    animation: hero-drift 22s ease-in-out infinite;
+  }
+  @keyframes hero-drift {
+    0%, 100% { background-position: 0 0; }
+    50% { background-position: 10px 14px; }
   }
   .hero-grid {
     position: relative;
@@ -324,6 +330,7 @@
     cursor: pointer;
   }
   .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: scale(0.97); }
   .btn-primary { background: var(--ink); color: var(--paper); }
   .btn-primary:hover { background: var(--accent); }
   .btn-ghost { border-color: var(--border); color: var(--ink); }
@@ -561,6 +568,7 @@
     transition: transform 0.15s ease, background-color 0.15s ease;
   }
   .chat-fab:hover { transform: translateY(-2px); background: var(--accent); color: var(--accent-ink); }
+  .chat-fab:active { transform: scale(0.94); }
   .chat-fab svg { width: 22px; height: 22px; }
 
   .chat-panel {
@@ -638,8 +646,10 @@
     border-radius: 999px;
     color: var(--ink-dim);
     background: var(--surface);
+    transition: transform 0.1s ease, border-color 0.15s ease, color 0.15s ease;
   }
   .chat-chip:hover { border-color: var(--accent); color: var(--ink); }
+  .chat-chip:active { transform: scale(0.96); }
 
   .chat-input-row {
     display: flex;
