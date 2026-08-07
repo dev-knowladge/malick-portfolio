@@ -459,7 +459,8 @@
 
   .project-cover {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
     margin: -26px -24px 0;
     padding: 0;
     border: none;
@@ -467,6 +468,32 @@
     background: var(--paper);
     overflow: hidden;
     border-radius: 8px 8px 0 0;
+  }
+  .cover-chrome {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 26px;
+    padding: 0 10px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    flex: 0 0 auto;
+  }
+  .cover-dots { display: flex; gap: 5px; flex: 0 0 auto; }
+  .cover-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--border); }
+  .cover-url {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+    background: var(--paper);
+    border-radius: 999px;
+    padding: 2px 10px;
+    flex: 1 1 auto;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .project-cover img {
     display: block;
@@ -1029,6 +1056,10 @@
       <article class="project-card">
         ${cover ? `
         <button type="button" class="project-cover" data-project="${pi}" data-index="0" aria-label="Voir la galerie — ${esc(p.title)}">
+          <span class="cover-chrome" aria-hidden="true">
+            <span class="cover-dots"><span></span><span></span><span></span></span>
+            <span class="cover-url">${esc(p.id)}</span>
+          </span>
           <img src="${esc(cover.src)}" alt="${esc(cover.alt)}" loading="lazy" width="640" height="400" />
           ${imgs.length > 1 ? `<span class="project-cover-count">🖼 ${imgs.length}</span>` : ""}
         </button>` : ""}
