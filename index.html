@@ -498,8 +498,9 @@
   .project-cover img {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 1.9;
     object-fit: cover;
+    object-position: center top;
     transition: transform 0.35s ease;
   }
   .project-cover:hover img { transform: scale(1.05); }
@@ -523,7 +524,7 @@
   .project-thumb {
     flex: 0 0 auto;
     width: 52px;
-    height: 34px;
+    height: 27px;
     padding: 0;
     border: 1px solid var(--border);
     border-radius: 4px;
@@ -1047,7 +1048,7 @@
         ? `<div class="project-thumbs" role="group" aria-label="Aperçus supplémentaires — ${esc(p.title)}">
             ${imgs.map((im, ii) => `
               <button type="button" class="project-thumb${ii === 0 ? " active" : ""}" data-project="${pi}" data-index="${ii}" aria-label="Voir l'image ${ii + 1} sur ${imgs.length} — ${esc(p.title)}">
-                <img src="${esc(im.src)}" alt="" loading="lazy" width="120" height="75" />
+                <img src="${esc(im.src)}" alt="" loading="lazy" width="120" height="63" />
               </button>
             `).join("")}
           </div>`
@@ -1060,7 +1061,7 @@
             <span class="cover-dots"><span></span><span></span><span></span></span>
             <span class="cover-url">${esc(p.id)}</span>
           </span>
-          <img src="${esc(cover.src)}" alt="${esc(cover.alt)}" loading="lazy" width="640" height="400" />
+          <img src="${esc(cover.src)}" alt="${esc(cover.alt)}" loading="lazy" width="640" height="337" />
           ${imgs.length > 1 ? `<span class="project-cover-count">🖼 ${imgs.length}</span>` : ""}
         </button>` : ""}
         ${thumbs}
