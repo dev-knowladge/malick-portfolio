@@ -508,8 +508,9 @@
   .project-video {
     display: block;
     width: 100%;
-    aspect-ratio: 1.9;
-    object-fit: contain;
+    aspect-ratio: 0.56;
+    object-fit: cover;
+    object-position: center top;
     background: var(--surface-2);
   }
   .project-cover-count {
@@ -569,6 +570,41 @@
     align-items: center;
     gap: 12px;
   }
+  .lightbox-frame {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 78vh;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid color-mix(in srgb, var(--paper) 14%, transparent);
+  }
+  .lightbox-chrome {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 30px;
+    padding: 0 12px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    flex: 0 0 auto;
+  }
+  .lightbox-chrome .cover-dots span { width: 8px; height: 8px; }
+  .lightbox-chrome .cover-url {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+    background: var(--paper);
+    border-radius: 999px;
+    padding: 2px 12px;
+    flex: 1 1 auto;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .lightbox-img-wrap {
     max-width: 100%;
     max-height: 74vh;
@@ -576,13 +612,12 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    background: var(--surface);
   }
   .lightbox-img-wrap img {
     max-width: 100%;
     max-height: 74vh;
     object-fit: contain;
-    border-radius: 6px;
-    box-shadow: var(--shadow);
     cursor: zoom-in;
     transition: transform 0.25s ease;
     background: var(--surface);
@@ -1220,8 +1255,14 @@
   <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Image précédente">←</button>
   <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Image suivante">→</button>
   <figure class="lightbox-figure">
-    <div class="lightbox-img-wrap">
-      <img id="lightboxImg" src="" alt="" />
+    <div class="lightbox-frame">
+      <div class="lightbox-chrome" aria-hidden="true">
+        <span class="cover-dots"><span></span><span></span><span></span></span>
+        <span class="cover-url" id="lightboxUrl"></span>
+      </div>
+      <div class="lightbox-img-wrap">
+        <img id="lightboxImg" src="" alt="" />
+      </div>
     </div>
     <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
     <div class="lightbox-counter" id="lightboxCounter"></div>
@@ -1233,6 +1274,7 @@
   "use strict";
   const overlay = document.getElementById("lightboxOverlay");
   const imgEl = document.getElementById("lightboxImg");
+  const urlEl = document.getElementById("lightboxUrl");
   const captionEl = document.getElementById("lightboxCaption");
   const counterEl = document.getElementById("lightboxCounter");
   const closeBtn = document.getElementById("lightboxClose");
@@ -1256,6 +1298,8 @@
     imgEl.src = im.src;
     imgEl.alt = im.alt;
     imgEl.classList.remove("zoomed");
+    const p = window.PROJECTS_DATA && window.PROJECTS_DATA[currentProject];
+    urlEl.textContent = p ? p.id : "";
     captionEl.textContent = im.alt;
     counterEl.textContent = imgs.length > 1 ? `${currentIndex + 1} / ${imgs.length}` : "";
     const multi = imgs.length > 1;
