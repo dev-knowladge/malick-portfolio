@@ -504,6 +504,14 @@
     transition: transform 0.35s ease;
   }
   .project-cover:hover img { transform: scale(1.05); }
+  .project-video-wrap { cursor: default; }
+  .project-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.9;
+    object-fit: contain;
+    background: var(--surface-2);
+  }
   .project-cover-count {
     position: absolute;
     bottom: 8px;
@@ -1015,7 +1023,27 @@
         { src: "assets/projects/buntu-liggeey/01-dashboard-admin.png", alt: "Tableau de bord administrateur de buntu-liggeey, avec statistiques des talents, entreprises et offres" },
       ],
     },
-    // AJOUTER UN PROJET ICI ↓ (ajoute aussi un tableau "images" : [{ src, alt }])
+    {
+      id: "ndaanaan-institut",
+      title: "NDAANAAN Institut",
+      desc: "Centre d'enseignement islamique à distance (Coran, Fiqh, arabe) — maquette Figma pour une commande client, en attente de validation avant développement.",
+      role: "Design UI/UX (Figma).",
+      stack: ["Figma"],
+      team: [],
+      extra: [["Statut", "Maquette — en attente de validation"]],
+      video: { src: "assets/videos/ndaanaan-institut-demo.mp4", poster: "assets/projects/ndaanaan-institut/poster.jpg", alt: "Prototype Figma de l'application NDAANAAN Institut, écran d'accueil élève / enseignant" },
+    },
+    {
+      id: "nour",
+      title: "Nour",
+      desc: "Réseau social pensé autour du Coran : partage de récitations, versets et défis d'apprentissage.",
+      role: "Idéation et design UI/UX (Figma).",
+      stack: ["Figma"],
+      team: ["un ami"],
+      extra: [["Statut", "Concept — maquette Figma"]],
+      video: { src: "assets/videos/nour-demo.mp4", poster: "assets/projects/nour/poster.jpg", alt: "Prototype Figma de l'application Nour, écran de connexion" },
+    },
+    // AJOUTER UN PROJET ICI ↓ (ajoute aussi un tableau "images" : [{ src, alt }] ou un champ "video" : { src, poster, alt })
   ];
   window.PROJECTS_DATA = PROJECTS;
 
@@ -1053,9 +1081,15 @@
             `).join("")}
           </div>`
         : "";
-      return `
-      <article class="project-card">
-        ${cover ? `
+      const coverBlock = p.video ? `
+        <div class="project-cover project-video-wrap">
+          <span class="cover-chrome" aria-hidden="true">
+            <span class="cover-dots"><span></span><span></span><span></span></span>
+            <span class="cover-url">${esc(p.id)}</span>
+          </span>
+          <video class="project-video" src="${esc(p.video.src)}" poster="${esc(p.video.poster)}" controls preload="metadata" playsinline aria-label="${esc(p.video.alt)}"></video>
+        </div>`
+        : cover ? `
         <button type="button" class="project-cover" data-project="${pi}" data-index="0" aria-label="Voir la galerie — ${esc(p.title)}">
           <span class="cover-chrome" aria-hidden="true">
             <span class="cover-dots"><span></span><span></span><span></span></span>
@@ -1063,7 +1097,10 @@
           </span>
           <img src="${esc(cover.src)}" alt="${esc(cover.alt)}" loading="lazy" width="640" height="337" />
           ${imgs.length > 1 ? `<span class="project-cover-count">🖼 ${imgs.length}</span>` : ""}
-        </button>` : ""}
+        </button>` : "";
+      return `
+      <article class="project-card">
+        ${coverBlock}
         ${thumbs}
         <h3>${esc(p.title)}</h3>
         <p class="desc">${esc(p.desc)}</p>
