@@ -549,7 +549,9 @@
     position: fixed;
     inset: 0;
     z-index: 200;
-    background: color-mix(in srgb, var(--ink) 88%, transparent);
+    background: rgba(8, 11, 9, 0.9);
+    backdrop-filter: blur(10px) saturate(0.85);
+    -webkit-backdrop-filter: blur(10px) saturate(0.85);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -577,7 +579,7 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    border: 1px solid color-mix(in srgb, var(--paper) 14%, transparent);
+    border: 1px solid rgba(255, 255, 255, 0.14);
   }
   .lightbox-chrome {
     display: flex;
