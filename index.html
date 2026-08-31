@@ -1122,7 +1122,7 @@
             <span class="cover-dots"><span></span><span></span><span></span></span>
             <span class="cover-url">${esc(p.id)}</span>
           </span>
-          <video class="project-video" src="${esc(p.video.src)}" poster="${esc(p.video.poster)}" controls preload="metadata" playsinline aria-label="${esc(p.video.alt)}"></video>
+          <video class="project-video" data-src="${esc(p.video.src)}" poster="${esc(p.video.poster)}" controls preload="none" playsinline aria-label="${esc(p.video.alt)}"></video>
         </div>`
         : cover ? `
         <button type="button" class="project-cover" data-project="${pi}" data-index="0" aria-label="Voir la galerie — ${esc(p.title)}">
@@ -1185,6 +1185,25 @@
   renderProjects();
   renderSkills();
   renderContact();
+
+  /* ---- Chargement différé des vidéos démo (metadata + source seulement à l'approche du viewport) ---- */
+  const lazyVideos = Array.from(document.querySelectorAll(".project-video[data-src]"));
+  const videoObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const v = e.target;
+          v.src = v.dataset.src;
+          v.removeAttribute("data-src");
+          v.preload = "metadata";
+          v.load();
+          videoObserver.unobserve(v);
+        }
+      });
+    },
+    { rootMargin: "300px 0px" }
+  );
+  lazyVideos.forEach((v) => videoObserver.observe(v));
 
   /* ---- Reveal des cartes projet ---- */
   const cards = Array.from(document.querySelectorAll(".project-card"));
