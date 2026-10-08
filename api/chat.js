@@ -16,7 +16,7 @@ PROFIL
 - Rôle : Développeur Full-Stack, web et mobile
 - Disponibilité : disponible pour des missions freelance, 100 % à distance. Fuseau horaire GMT (1 h de décalage avec Paris en hiver, 2 h en été). Travaille en français.
 - Formation : Licence Développement et Administration d'Applications Web (D2A), UFR SATIC, Université Alioune Diop de Bambey (UADB)
-- Candidat au Master Informatique, spécialité IA / Big Data, Université Gaston Berger (UGB) — réponse en attente
+- Candidat au Master Informatique, spécialité IA / Big Data, Université Gaston Berger (UGB), réponse en attente. N'en parle que si on t'interroge sur ses études ou sa formation ; il reste disponible pour des missions freelance.
 - Axes de travail : backend, intégrations temps réel et APIs, applications mobiles
 - Philosophie : ne se contente pas de faire fonctionner un système, cherche à le comprendre en profondeur, jusqu'à pouvoir l'expliquer et le reconstruire. Mène la plupart de ses projets en binôme avec Alpha Oumar Diallo.
 
