@@ -262,6 +262,7 @@
   .hero-inner > *:nth-child(4) { animation-delay: 0.44s; }
   .hero-inner > *:nth-child(5) { animation-delay: 0.58s; }
   .hero-inner > *:nth-child(6) { animation-delay: 0.72s; }
+  .hero-inner > *:nth-child(7) { animation-delay: 0.86s; }
   @keyframes hero-in {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: none; }
@@ -353,8 +354,25 @@
   .btn-ghost { border-color: var(--border); color: var(--ink); }
   .btn-ghost:hover { border-color: var(--ink); }
 
+  .hero-facts {
+    list-style: none;
+    margin: 30px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 26px;
+    font-size: 0.86rem;
+    color: var(--ink-dim);
+  }
+  .hero-facts b {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-right: 4px;
+  }
   .status-line {
-    margin-top: 26px;
+    margin-top: 22px;
     display: inline-flex;
     align-items: center;
     gap: 9px;
@@ -438,6 +456,12 @@
   }
 
   /* ---- Projects ---- */
+  /* Projets phares : grandes cartes horizontales, puis grille régulière pour les autres */
+  .project-featured {
+    display: grid;
+    gap: 22px;
+    margin-bottom: 22px;
+  }
   .project-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -447,18 +471,31 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 26px 24px 24px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 14px;
     opacity: 0;
     transform: translateY(14px);
     transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .project-card.in-view { opacity: 1; transform: translateY(0); }
   .project-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+  .card-media {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .card-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px 24px 24px;
+  }
   .project-card h3 { font-size: 1.18rem; }
-  .project-card .desc { color: var(--ink-dim); font-size: 0.94rem; flex: 1 1 auto; }
+  .project-card .desc { color: var(--ink-dim); font-size: 0.94rem; }
   .project-card .role {
     font-size: 0.86rem;
     color: var(--ink-dim);
@@ -469,6 +506,7 @@
   .stack-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .stack-row .chip { font-size: 0.68rem; padding: 3px 9px; }
   .card-meta {
+    margin-top: auto;
     display: flex;
     flex-wrap: wrap;
     gap: 6px 10px;
@@ -479,18 +517,29 @@
   }
   .card-meta .extra { color: var(--accent); font-weight: 500; }
 
+  /* Carte phare : média d'un côté, texte de l'autre (côtés alternés) */
+  .project-card.featured { flex-direction: row; }
+  .project-card.featured:nth-child(even) { flex-direction: row-reverse; }
+  .featured .card-media { flex: 0 0 58%; border-bottom: 0; border-right: 1px solid var(--border); }
+  .featured:nth-child(even) .card-media { border-right: 0; border-left: 1px solid var(--border); }
+  .featured.portrait .card-media { flex-basis: 40%; }
+  .featured .card-body { padding: 30px 32px; justify-content: center; }
+  .featured h3 { font-size: clamp(1.35rem, 2.2vw, 1.7rem); }
+  .featured .desc { font-size: 1rem; }
+
   .project-cover {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    margin: -26px -24px 0;
+    display: block;
+    width: 100%;
+    margin: 0;
     padding: 0;
     border: none;
     cursor: zoom-in;
-    background: var(--paper);
+    background: none;
     overflow: hidden;
-    border-radius: 8px 8px 0 0;
   }
+  /* Dans une carte phare, le média occupe toute la hauteur de la colonne */
+  .featured .project-cover { display: flex; flex-direction: column; flex: 1 1 auto; }
   .cover-chrome {
     display: flex;
     align-items: center;
@@ -517,23 +566,28 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  /* L'image remplit son cadre (recadrée depuis le coin haut-gauche, là où est la navigation de l'app) */
   .project-cover img {
     display: block;
     width: 100%;
-    aspect-ratio: 1.9;
-    object-fit: contain;
-    background: var(--surface-2);
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: left top;
     transition: transform 0.35s ease;
   }
-  .project-cover:hover img { transform: scale(1.05); }
+  .featured .project-cover img { flex: 1 1 auto; height: 100%; min-height: 300px; aspect-ratio: auto; }
+  .project-cover:hover img { transform: scale(1.03); }
   .project-video-wrap { cursor: default; }
   .project-video {
     display: block;
     width: 100%;
-    aspect-ratio: 0.56;
+    aspect-ratio: 16 / 10;
     object-fit: contain;
     background: var(--surface-2);
   }
+  .featured .project-video { flex: 1 1 auto; aspect-ratio: auto; height: 480px; }
   .project-cover-count {
     position: absolute;
     bottom: 8px;
@@ -807,7 +861,12 @@
      ============================================================ */
   @media (max-width: 860px) {
     .about-grid { grid-template-columns: 1fr; gap: 36px; }
-    .project-grid { grid-template-columns: 1fr 1fr; }
+    .project-grid { grid-template-columns: 1fr; }
+    .project-card.featured, .project-card.featured:nth-child(even) { flex-direction: column; }
+    .featured .card-media, .featured:nth-child(even) .card-media { flex: 0 0 auto; border: 0; border-bottom: 1px solid var(--border); }
+    .featured .project-cover img { height: auto; aspect-ratio: 16 / 10; min-height: 0; }
+    .featured .project-video { height: 420px; }
+    .featured .card-body { padding: 20px 24px 24px; }
     .service-grid { grid-template-columns: 1fr; }
     .process-steps { grid-template-columns: 1fr 1fr; }
     .hero-grid { flex-direction: column-reverse; gap: 36px; }
@@ -980,7 +1039,7 @@
   <div class="nav-inner">
     <a href="#top" class="brand" style="text-decoration:none;">
       <span class="brand-mark">M</span>
-      malick
+      Malick Ba
     </a>
     <ul class="nav-links">
       <li><a href="#about" data-nav="about" data-i18n="nav.about">À propos</a></li>
@@ -1009,6 +1068,11 @@
           <a href="#contact" class="btn btn-primary" data-i18n="hero.cta">Discuter de votre projet →</a>
           <a href="#projects" class="btn btn-ghost" data-i18n="hero.projects">Voir mes projets</a>
         </div>
+        <ul class="hero-facts">
+          <li data-i18n="hero.fact1"><b>1</b> plateforme en production</li>
+          <li data-i18n="hero.fact2"><b>1</b> commande client en cours</li>
+          <li data-i18n="hero.fact3"><b>4</b> applications développées</li>
+        </ul>
         <div class="status-line">
           <span class="status-dot available"></span>
           <span data-i18n="hero.status">Disponible pour missions freelance · 100 % à distance · GMT (1 h de Paris)</span>
@@ -1038,11 +1102,6 @@
             <strong>Alpha Oumar Diallo</strong>, sur un même dépôt et des
             conventions partagées.
           </p>
-        </div>
-        <div class="chip-cluster">
-          <span class="chip">Backend</span>
-          <span class="chip" data-i18n="about.chip.integrations">Intégrations complexes</span>
-          <span class="chip">Mobile</span>
         </div>
       </div>
       <ul class="fact-list">
@@ -1098,6 +1157,7 @@
         <span class="eyebrow" data-i18n="projects.eyebrow">Projets</span>
         <h2 data-i18n="projects.title">Ce que j'ai construit</h2>
       </div>
+      <div class="project-featured" id="projectFeatured"></div>
       <div class="project-grid" id="projectGrid"></div>
     </div>
   </section>
@@ -1152,13 +1212,15 @@
     "hero.lede": "I design and build your web platforms, mobile apps and real-time backends, from mockup to production, with documented code your team can take over.",
     "hero.cta": "Let's discuss your project →",
     "hero.projects": "See my projects",
+    "hero.fact1": "<b>1</b> platform in production",
+    "hero.fact2": "<b>1</b> client project in progress",
+    "hero.fact3": "<b>4</b> apps built",
     "hero.status": "Available for freelance work · 100% remote · GMT (1 h from Paris)",
 
     "about.eyebrow": "About",
     "about.title": "Understand before building",
     "about.p1": "Making a system work isn't enough for me: I want to understand why it works, to the point where I can explain it and rebuild it from scratch.",
     "about.p2": "I handle the backend, real-time integrations and mobile end to end, and I know how to fit into a team: most of my projects are built in tandem with <strong>Alpha Oumar Diallo</strong>, on a shared repository with shared conventions.",
-    "about.chip.integrations": "Complex integrations",
     "about.location": "Location",
     "about.location.value": "Thiès, Senegal",
     "about.education": "Education",
@@ -1314,6 +1376,7 @@
     {
       id: "douane-encheres",
       title: "Douane Enchères SN",
+      featured: true,
       desc: {
         fr: "Plateforme d'enchères en ligne pour les véhicules saisis par la douane, avec mises en temps réel pour les acheteurs du Port de Dakar.",
         en: "Online auction platform for vehicles seized by customs, with real-time bidding for buyers at the Port of Dakar.",
@@ -1334,6 +1397,7 @@
     {
       id: "ndaanaan-institut",
       title: "NDAANAAN Institut",
+      featured: true,
       desc: {
         fr: "Commande client : plateforme d'enseignement islamique à distance (Coran, Fiqh, arabe), avec application élèves/enseignants, back-office du directeur et API.",
         en: "Client project: online Islamic education platform (Quran, Fiqh, Arabic), with a student/teacher mobile app, a director's back-office and an API.",
@@ -1400,7 +1464,8 @@
       extra: [[{ fr: "Statut", en: "Status" }, { fr: "Concept — maquette Figma", en: "Concept — Figma mockup" }]],
       video: { src: "assets/videos/nour-demo.mp4", poster: "assets/projects/nour/poster.jpg", alt: { fr: "Prototype Figma de l'application Nour, écran de connexion", en: "Figma prototype of the Nour app, sign-in screen" } },
     },
-    // AJOUTER UN PROJET ICI ↓ (ajoute aussi un tableau "images" : [{ src, alt }] ou un champ "video" : { src, poster, alt })
+    // AJOUTER UN PROJET ICI ↓ (ajoute aussi un tableau "images" : [{ src, alt }] ou un champ "video" : { src, poster, alt } ;
+    // "featured: true" l'affiche en grande carte horizontale en haut de la section)
   ];
 
   // Catégorie → compétences
@@ -1428,8 +1493,8 @@
     // La galerie lit PROJECTS_DATA : on lui expose la version dans la langue courante
     const projects = pick(PROJECTS);
     window.PROJECTS_DATA = projects;
-    const grid = document.getElementById("projectGrid");
-    grid.innerHTML = projects.map((p, pi) => {
+    // pi reste l'index dans PROJECTS_DATA, quel que soit le conteneur, pour que la galerie retrouve le projet
+    const card = (p, pi) => {
       const imgs = p.images || [];
       const cover = imgs[0];
       const thumbs = imgs.length > 1
@@ -1460,23 +1525,32 @@
         </button>` : "";
       // Typographie : espace avant les deux-points en français seulement
       const colon = I18N.lang === "fr" ? " : " : ": ";
+      const classes = ["project-card", p.featured ? "featured" : "", p.video ? "portrait" : ""].filter(Boolean).join(" ");
       return `
-      <article class="project-card">
-        ${coverBlock}
-        ${thumbs}
-        <h3>${esc(p.title)}</h3>
-        <p class="desc">${esc(p.desc)}</p>
-        <p class="role"><b>${esc(t("projects.role", "Mon rôle"))}</b>${esc(p.role)}</p>
-        <div class="stack-row">${p.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div>
-        <div class="card-meta">
-          ${p.team.length ? `<span>${esc(t("projects.with", "avec"))} ${esc(p.team.join(", "))}</span>` : ""}
-          ${p.extra.map(([k, v]) => `<span class="extra">${esc(k)}${colon}${esc(v)}</span>`).join("")}
+      <article class="${classes}">
+        <div class="card-media">${coverBlock}</div>
+        <div class="card-body">
+          ${thumbs}
+          <h3>${esc(p.title)}</h3>
+          <p class="desc">${esc(p.desc)}</p>
+          <p class="role"><b>${esc(t("projects.role", "Mon rôle"))}</b>${esc(p.role)}</p>
+          <div class="stack-row">${p.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div>
+          ${p.team.length || p.extra.length ? `<div class="card-meta">
+            ${p.team.length ? `<span>${esc(t("projects.with", "avec"))} ${esc(p.team.join(", "))}</span>` : ""}
+            ${p.extra.map(([k, v]) => `<span class="extra">${esc(k)}${colon}${esc(v)}</span>`).join("")}
+          </div>` : ""}
         </div>
       </article>
       `;
-    }).join("");
+    };
 
-    grid.querySelectorAll(".project-cover, .project-thumb").forEach((btn) => {
+    const indexed = projects.map((p, pi) => [p, pi]);
+    document.getElementById("projectFeatured").innerHTML =
+      indexed.filter(([p]) => p.featured).map(([p, pi]) => card(p, pi)).join("");
+    document.getElementById("projectGrid").innerHTML =
+      indexed.filter(([p]) => !p.featured).map(([p, pi]) => card(p, pi)).join("");
+
+    document.querySelectorAll("#projects button.project-cover, #projects .project-thumb").forEach((btn) => {
       btn.addEventListener("click", () => {
         openGallery(Number(btn.dataset.project), Number(btn.dataset.index));
       });
