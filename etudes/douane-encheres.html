@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Douane Enchères SN — Étude de cas · Malick Ba</title>
+<meta name="description" content="Étude de cas : plateforme d'enchères en ligne en temps réel pour les véhicules saisis par la Douane sénégalaise." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #f2f3ef;
+    --surface: #ffffff;
+    --surface-2: #e8eae3;
+    --border: #d7dad0;
+    --ink: #16211d;
+    --ink-dim: #4c564e;
+    --ink-faint: #7c887e;
+    --accent: #2f6d5e;
+    --accent-ink: #ffffff;
+    --status: #a86a1b;
+    --status-bg: #f4e6d2;
+    --shadow: 0 20px 50px rgba(22, 33, 29, 0.1);
+    --radius: 3px;
+
+    --font-display: "Fraunces", "Iowan Old Style", ui-serif, Georgia, serif;
+    --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #111613;
+      --surface: #171d19;
+      --surface-2: #1e2521;
+      --border: #2b332e;
+      --ink: #edefea;
+      --ink-dim: #a9b2a9;
+      --ink-faint: #6d766f;
+      --accent: #63c2a3;
+      --accent-ink: #0d1512;
+      --status: #e3b169;
+      --status-bg: #362a17;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  :root[data-theme="light"] {
+    --paper: #f2f3ef;
+    --surface: #ffffff;
+    --surface-2: #e8eae3;
+    --border: #d7dad0;
+    --ink: #16211d;
+    --ink-dim: #4c564e;
+    --ink-faint: #7c887e;
+    --accent: #2f6d5e;
+    --accent-ink: #ffffff;
+    --status: #a86a1b;
+    --status-bg: #f4e6d2;
+    --shadow: 0 20px 50px rgba(22, 33, 29, 0.1);
+  }
+  :root[data-theme="dark"] {
+    --paper: #111613;
+    --surface: #171d19;
+    --surface-2: #1e2521;
+    --border: #2b332e;
+    --ink: #edefea;
+    --ink-dim: #a9b2a9;
+    --ink-faint: #6d766f;
+    --accent: #63c2a3;
+    --accent-ink: #0d1512;
+    --status: #e3b169;
+    --status-bg: #362a17;
+    --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  img { max-width: 100%; height: auto; display: block; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  code { font-family: var(--font-mono); font-size: 0.86em; background: var(--surface-2); padding: 1px 5px; border-radius: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  [hidden] { display: none !important; }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---- Navigation ---- */
+  .nav {
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 860px; margin: 0 auto; padding: 0 32px; height: 58px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .back { text-decoration: none; font-size: 0.9rem; color: var(--ink-dim); }
+  .back:hover { color: var(--ink); }
+  .lang-toggle {
+    font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em;
+    color: var(--ink); background: transparent;
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 11px; cursor: pointer;
+  }
+  .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---- En-tête ---- */
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .case-hero { padding: 64px 0 36px; }
+  .case-hero h1 { font-size: clamp(2.2rem, 5.5vw, 3.4rem); line-height: 1.05; margin-top: 14px; }
+  .case-hero .lede { margin-top: 20px; font-size: 1.12rem; color: var(--ink-dim); max-width: 680px; }
+  .facts {
+    margin: 34px 0 0; display: grid; grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--border);
+  }
+  .facts div { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--border); }
+  .facts dt {
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  .facts dd { margin: 4px 0 0; font-size: 0.94rem; }
+
+  .hero-shot {
+    margin: 8px 0 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  /* ---- Blocs de contenu ---- */
+  .block { padding: 56px 0 0; }
+  .block h2 { font-size: clamp(1.5rem, 3vw, 1.9rem); margin-bottom: 18px; }
+  .block > p + p { margin-top: 14px; }
+  .block > p, .challenge p { color: var(--ink-dim); }
+  .block strong, .challenge strong { color: var(--ink); font-weight: 600; }
+
+  .points { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+  .points li { position: relative; padding-left: 20px; color: var(--ink-dim); }
+  .points li::before {
+    content: ""; position: absolute; left: 0; top: 0.72em;
+    width: 8px; height: 2px; background: var(--accent);
+  }
+  .note { margin-top: 16px; font-size: 0.88rem; color: var(--ink-faint); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+  /* ---- Schéma d'architecture ---- */
+  .diagram {
+    margin: 0 0 26px; padding: 18px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px;
+  }
+  .diagram svg { width: 100%; height: auto; display: block; }
+  .d-box { fill: var(--surface-2); stroke: var(--border); stroke-width: 1.2; }
+  .d-accent { fill: var(--surface); stroke: var(--accent); stroke-width: 1.6; }
+  .d-inner { fill: var(--surface-2); stroke: var(--border); }
+  .d-dashed { stroke-dasharray: 5 4; }
+  .d-title { fill: var(--ink); font-family: var(--font-body); font-weight: 600; font-size: 15px; text-anchor: middle; }
+  .d-small { font-size: 13.5px; }
+  .d-sub { fill: var(--ink-faint); font-family: var(--font-mono); font-size: 11.5px; text-anchor: middle; }
+  .d-note { fill: var(--accent); }
+  .d-tight { font-size: 10.5px; }
+  .d-line { stroke: var(--ink-faint); stroke-width: 1.4; }
+  .d-arrowhead { fill: var(--ink-faint); }
+
+  /* ---- Défis ---- */
+  .challenge {
+    display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 6px;
+    padding: 26px 0; border-top: 1px solid var(--border);
+  }
+  .challenge:first-of-type { border-top: 0; padding-top: 4px; }
+  .challenge .num { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); padding-top: 5px; }
+  .challenge h3 { font-size: 1.25rem; margin-bottom: 10px; }
+  .challenge p + p { margin-top: 12px; }
+  .code {
+    margin: 18px 0 0; padding: 16px 18px; overflow-x: auto;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+    font-size: 0.8rem; line-height: 1.6;
+  }
+  .code code { background: none; padding: 0; font-size: inherit; color: var(--ink); }
+
+  /* ---- Captures ---- */
+  .shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .shots a { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; display: block; }
+  .shots img { width: 100%; transition: transform 0.3s ease; }
+  .shots a:hover img { transform: scale(1.04); }
+
+  /* ---- Appel à l'action ---- */
+  .cta {
+    margin: 64px 0 0; padding: 40px 36px; border-radius: 8px;
+    background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
+  .cta h2 { font-size: clamp(1.25rem, 2.6vw, 1.6rem); max-width: 480px; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 500;
+    background: var(--accent); color: var(--accent-ink);
+    padding: 12px 20px; border-radius: 3px; white-space: nowrap;
+  }
+  .btn:hover { filter: brightness(1.08); }
+
+  .foot {
+    display: flex; justify-content: space-between; gap: 12px;
+    padding-top: 36px; padding-bottom: 36px;
+    font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-faint);
+  }
+
+  @media (max-width: 720px) {
+    .wrap, .nav-inner { padding-left: 20px; padding-right: 20px; }
+    .case-hero { padding-top: 44px; }
+    .facts { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 0; }
+    .two-col > div + div { padding-top: 48px; }
+    .shots { grid-template-columns: 1fr; }
+    .challenge { grid-template-columns: minmax(0, 1fr); }
+    /* Le schéma garde une taille lisible : on le fait défiler plutôt que de le rétrécir */
+    .diagram { padding: 10px; overflow-x: auto; }
+    .diagram svg { min-width: 600px; }
+    .cta { padding: 30px 24px; }
+  }
+
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="back" href="../index.html#projects" data-lang-text='{"fr":"← Tous les projets","en":"← All projects"}'>← Tous les projets</a>
+    <button type="button" class="lang-toggle" id="langToggle" aria-label="View in English">EN</button>
+  </div>
+</nav>
+<main class="wrap">
+
+  <article class="case" lang="fr" data-lang="fr">
+    <header class="case-hero">
+      <span class="eyebrow">Étude de cas</span>
+      <h1>Douane Enchères SN</h1>
+      <p class="lede">Une plateforme d'enchères en ligne pour les véhicules saisis par la Douane sénégalaise au Port de Dakar, avec mises en temps réel sur le web et sur mobile, conforme à l'arrêté n° 013712/MEFP/DGD/DRCI du 14 juillet 2015.</p>
+      <dl class="facts"><div><dt>Mon rôle</dt><dd>Temps réel, sécurité des mises, application mobile</dd></div><div><dt>Équipe</dt><dd>En binôme avec Alpha Oumar Diallo</dd></div><div><dt>Stack</dt><dd>Next.js · TypeScript · PostgreSQL · Prisma · Socket.io · React Native (Expo)</dd></div><div><dt>Statut</dt><dd>Déployé en démonstration (Render) · soutenu 16/20</dd></div></dl>
+    </header>
+
+    <figure class="hero-shot">
+      <img src="../assets/projects/douane-encheres/01-dashboard-igf.png" alt="Tableau de bord de l'inspection (IGF) : adjudications, cautions séquestrées et conformité des paiements" width="1851" height="969" />
+    </figure>
+
+    <section class="block">
+      <h2>Le contexte</h2>
+      <p>Les véhicules saisis par la douane sont revendus aux enchères. Le projet consistait à numériser toute la vente, de l'inscription de l'acheteur jusqu'au certificat d'adjudication, en respectant à la lettre l'arrêté qui l'encadre.</p><p>Ça implique <strong>six profils</strong> aux droits très différents : enchérisseur, agent des douanes, administrateur, inspection (IGF), super-administrateur et visiteur. Et des règles juridiques à traduire en code : caution obligatoire avant de miser, interdiction pour les agents des douanes d'enchérir (art. 22), prolongation des fins d'enchères (art. 9), revente si le gagnant ne paie pas.</p>
+    </section>
+
+    <section class="block">
+      <h2>L'architecture</h2>
+      
+    <figure class="diagram" role="img" aria-label="Schéma : les clients web et mobile parlent à un serveur unique Next.js + Socket.io, qui lit et écrit dans PostgreSQL et appelle les services externes.">
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" class="d-arrowhead" />
+          </marker>
+        </defs>
+        <rect x="10" y="40" width="170" height="70" rx="8" class="d-box" />
+        <text x="95" y="70" class="d-title">Client web</text>
+        <text x="95" y="92" class="d-sub">Next.js · React</text>
+
+        <rect x="10" y="190" width="170" height="70" rx="8" class="d-box" />
+        <text x="95" y="220" class="d-title">App mobile</text>
+        <text x="95" y="242" class="d-sub">React Native · Expo</text>
+
+        <rect x="265" y="30" width="200" height="240" rx="10" class="d-box d-accent" />
+        <text x="365" y="62" class="d-title">Serveur Node unique</text>
+        <rect x="285" y="85" width="160" height="56" rx="6" class="d-inner" />
+        <text x="365" y="110" class="d-title d-small">Routes API</text>
+        <text x="365" y="128" class="d-sub">Next.js · Zod</text>
+        <rect x="285" y="160" width="160" height="56" rx="6" class="d-inner" />
+        <text x="365" y="185" class="d-title d-small">Socket.io</text>
+        <text x="365" y="203" class="d-sub">rooms session:id</text>
+        <text x="365" y="250" class="d-sub">server.ts</text>
+
+        <rect x="525" y="40" width="190" height="70" rx="8" class="d-box" />
+        <text x="620" y="70" class="d-title">PostgreSQL</text>
+        <text x="620" y="92" class="d-sub">Prisma</text>
+
+        <rect x="525" y="190" width="190" height="70" rx="8" class="d-box d-dashed" />
+        <text x="620" y="220" class="d-title d-small">Services externes</text>
+        <text x="620" y="242" class="d-sub d-tight">E-mail · WhatsApp · CinetPay</text>
+
+        <line x1="182" y1="75" x2="262" y2="110" class="d-line" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+        <line x1="182" y1="225" x2="262" y2="190" class="d-line" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+        <text x="200" y="155" class="d-sub d-note">HTTP + temps réel</text>
+        <line x1="467" y1="110" x2="522" y2="80" class="d-line" marker-end="url(#arrow)" />
+        <line x1="467" y1="190" x2="522" y2="222" class="d-line" marker-end="url(#arrow)" />
+      </svg>
+    </figure>
+      <ul class="points"><li><strong>Un seul serveur Node</strong> fait tourner Next.js et Socket.io sur le même port : les routes API qui enregistrent une mise peuvent la diffuser immédiatement aux participants.</li><li>Chaque session d'enchères a sa <strong>room Socket.io</strong> : un client ne reçoit que les événements de la vente qu'il regarde (nouvelle mise, surenchère, prolongation).</li><li>Le web s'authentifie par cookie (NextAuth), le mobile par <strong>jeton JWT</strong> : les mêmes routes acceptent les deux, sans dupliquer la logique métier.</li><li>Derrière le proxy de Render, la connexion WebSocket ne s'établit pas toujours : Socket.io <strong>bascule sur du long-polling</strong> au lieu de laisser le client bloqué.</li></ul>
+    </section>
+
+    <section class="block">
+      <h2>Les défis techniques</h2>
+      
+        <section class="challenge">
+          <span class="num">01</span>
+          <div>
+            <h3>Deux mises à la même milliseconde</h3>
+            <p>Deux acheteurs misent au même moment sur la même voiture. Les deux requêtes lisent le prix actuel avant que l'autre n'ait écrit, les deux passent la vérification, et on se retrouve avec <strong>deux mises « gagnantes »</strong>. Ce bug ne se voit jamais en test, seulement en vrai, au pire moment.</p><p>La solution : chaque mise passe dans une transaction qui <strong>verrouille la ligne de la voiture</strong> (<code>SELECT … FOR UPDATE</code>) et relit le prix à l'intérieur du verrou. Les mises concurrentes sur une même voiture s'exécutent les unes après les autres ; celles sur des voitures différentes ne se bloquent pas entre elles.</p>
+            <pre class="code"><code>await prisma.$transaction(async (tx) =&gt; {
+  // Verrou sur la voiture : les mises concurrentes passent une par une
+  await tx.$queryRaw`SELECT 1 FROM voitures WHERE id = ${voitureId} FOR UPDATE`
+
+  // Le prix est relu À L&#x27;INTÉRIEUR du verrou, jamais avant
+  const prixActuel = await meilleureMise(tx, sessionId, voitureId)
+  if (montant &lt; prixActuel + palier) return { insuffisant: true }
+
+  await tx.mise.updateMany({ where: { voitureId, estGagnante: true },
+                             data: { estGagnante: false } })
+  return tx.mise.create({ data: { montant, voitureId, estGagnante: true } })
+})</code></pre>
+          </div>
+        </section>
+        <section class="challenge">
+          <span class="num">02</span>
+          <div>
+            <h3>La mise de la dernière seconde</h3>
+            <p>Sans garde-fou, il suffit de miser à 2 secondes de la fin pour gagner sans laisser aux autres le temps de répondre. L'arrêté impose une prolongation.</p><p>Toute mise placée dans les <strong>3 dernières minutes</strong> repousse la fin de 3 minutes, dans la même transaction que la mise. Un événement <code>soft-close</code> envoie la nouvelle heure de fin à tous les participants, pour que tous les comptes à rebours restent synchronisés.</p>
+            
+          </div>
+        </section>
+        <section class="challenge">
+          <span class="num">03</span>
+          <div>
+            <h3>Plusieurs voitures dans une même vente</h3>
+            <p>Une session regroupe plusieurs véhicules. La première version calculait le prix actuel <strong>par session</strong> : une mise sur une voiture changeait le prix affiché d'une autre.</p><p>J'ai rattaché chaque mise à sa voiture et recalculé prix, mise gagnante et alertes de surenchère <strong>par véhicule</strong>. Les événements temps réel portent l'identifiant de la voiture, pour qu'un écran ignore ceux qui ne le concernent pas.</p>
+            
+          </div>
+        </section>
+        <section class="challenge">
+          <span class="num">04</span>
+          <div>
+            <h3>Le gagnant qui ne paie pas</h3>
+            <p>Si l'adjudicataire ne règle pas sous 48 heures, le véhicule doit être remis en vente (la « folle enchère »). Au départ, ça dépendait d'un bouton qu'un administrateur devait penser à cliquer.</p><p>Une tâche automatique vérifie les échéances <strong>toutes les heures et au démarrage du serveur</strong>, pour rattraper ce qui a été manqué pendant un redémarrage. Elle et le bouton manuel appellent la même fonction, protégée pour qu'un même paiement ne soit jamais traité deux fois.</p>
+            
+          </div>
+        </section>
+    </section>
+
+    <section class="block two-col">
+      <div>
+        <h2>Ce que j'ai fait</h2>
+        <ul class="points"><li>La couche temps réel : serveur Socket.io, rooms par session, événements de mise, de surenchère et de prolongation.</li><li>La sécurisation des mises concurrentes et le calcul du prix par véhicule.</li><li>Les notifications e-mail et WhatsApp aux étapes clés (surenchère, adjudication, paiement…).</li><li>La folle enchère automatique.</li><li>L'essentiel de l'application mobile Expo : inscription avec photo, catalogue, enchères en direct, caution, paiement, certificats.</li></ul>
+        <p class="note">Alpha Oumar Diallo a posé la structure du projet, le schéma de données et le déploiement sur Render.</p>
+      </div>
+      <div>
+        <h2>Le résultat</h2>
+        <ul class="points"><li>Les 68 tâches du cahier des charges livrées et vérifiées par un audit fonctionnel final.</li><li>Enchères temps réel validées entre le web et un téléphone réel.</li><li>Projet de fin de licence soutenu avec la note de <strong>16/20</strong>, déployé en démonstration sur Render.</li><li>Paiement CinetPay et WhatsApp Business intégrés mais en <strong>mode simulation</strong> : il ne manque que les comptes marchands pour passer en réel.</li></ul>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Aperçu</h2>
+      <div class="shots"><a href="../assets/projects/douane-encheres/02-dashboard-agent.png" target="_blank" rel="noopener"><img src="../assets/projects/douane-encheres/02-dashboard-agent.png" alt="Tableau de bord d'un agent des douanes : voitures à traiter et sessions en cours" loading="lazy" width="1851" height="969" /></a><a href="../assets/projects/douane-encheres/03-liste-voitures.png" target="_blank" rel="noopener"><img src="../assets/projects/douane-encheres/03-liste-voitures.png" alt="Liste des voitures saisies, avec statut et prix de départ" loading="lazy" width="1851" height="969" /></a></div>
+    </section>
+
+    <section class="cta">
+      <h2>Un projet avec du temps réel ou des règles métier exigeantes ?</h2>
+      <a class="btn" href="../index.html#contact">Discutons-en →</a>
+    </section>
+  </article>
+
+  <article class="case" lang="en" data-lang="en" hidden>
+    <header class="case-hero">
+      <span class="eyebrow">Case study</span>
+      <h1>Douane Enchères SN</h1>
+      <p class="lede">An online auction platform for vehicles seized by Senegalese customs at the Port of Dakar, with real-time bidding on web and mobile, compliant with the government order of July 14, 2015 (no. 013712/MEFP/DGD/DRCI).</p>
+      <dl class="facts"><div><dt>My role</dt><dd>Real time, bid integrity, mobile app</dd></div><div><dt>Team</dt><dd>In tandem with Alpha Oumar Diallo</dd></div><div><dt>Stack</dt><dd>Next.js · TypeScript · PostgreSQL · Prisma · Socket.io · React Native (Expo)</dd></div><div><dt>Status</dt><dd>Demo deployment (Render) · graded 16/20</dd></div></dl>
+    </header>
+
+    <figure class="hero-shot">
+      <img src="../assets/projects/douane-encheres/01-dashboard-igf.png" alt="Inspection (IGF) dashboard: awarded lots, escrowed deposits and payment compliance" width="1851" height="969" />
+    </figure>
+
+    <section class="block">
+      <h2>Context</h2>
+      <p>Vehicles seized by customs are resold at auction. The project was to digitize the whole sale, from buyer registration to the award certificate, while following the regulation that governs it to the letter.</p><p>That means <strong>six profiles</strong> with very different rights: bidder, customs officer, administrator, inspection (IGF), super-administrator and visitor. And legal rules to turn into code: mandatory deposit before bidding, customs officers barred from bidding (art. 22), auction end extensions (art. 9), resale if the winner doesn't pay.</p>
+    </section>
+
+    <section class="block">
+      <h2>Architecture</h2>
+      
+    <figure class="diagram" role="img" aria-label="Diagram: web and mobile clients talk to a single Next.js + Socket.io server, which reads and writes PostgreSQL and calls external services.">
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" class="d-arrowhead" />
+          </marker>
+        </defs>
+        <rect x="10" y="40" width="170" height="70" rx="8" class="d-box" />
+        <text x="95" y="70" class="d-title">Web client</text>
+        <text x="95" y="92" class="d-sub">Next.js · React</text>
+
+        <rect x="10" y="190" width="170" height="70" rx="8" class="d-box" />
+        <text x="95" y="220" class="d-title">Mobile app</text>
+        <text x="95" y="242" class="d-sub">React Native · Expo</text>
+
+        <rect x="265" y="30" width="200" height="240" rx="10" class="d-box d-accent" />
+        <text x="365" y="62" class="d-title">Single Node server</text>
+        <rect x="285" y="85" width="160" height="56" rx="6" class="d-inner" />
+        <text x="365" y="110" class="d-title d-small">API routes</text>
+        <text x="365" y="128" class="d-sub">Next.js · Zod</text>
+        <rect x="285" y="160" width="160" height="56" rx="6" class="d-inner" />
+        <text x="365" y="185" class="d-title d-small">Socket.io</text>
+        <text x="365" y="203" class="d-sub">rooms session:id</text>
+        <text x="365" y="250" class="d-sub">server.ts</text>
+
+        <rect x="525" y="40" width="190" height="70" rx="8" class="d-box" />
+        <text x="620" y="70" class="d-title">PostgreSQL</text>
+        <text x="620" y="92" class="d-sub">Prisma</text>
+
+        <rect x="525" y="190" width="190" height="70" rx="8" class="d-box d-dashed" />
+        <text x="620" y="220" class="d-title d-small">External services</text>
+        <text x="620" y="242" class="d-sub d-tight">Email · WhatsApp · CinetPay</text>
+
+        <line x1="182" y1="75" x2="262" y2="110" class="d-line" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+        <line x1="182" y1="225" x2="262" y2="190" class="d-line" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+        <text x="200" y="155" class="d-sub d-note">HTTP + real time</text>
+        <line x1="467" y1="110" x2="522" y2="80" class="d-line" marker-end="url(#arrow)" />
+        <line x1="467" y1="190" x2="522" y2="222" class="d-line" marker-end="url(#arrow)" />
+      </svg>
+    </figure>
+      <ul class="points"><li><strong>A single Node server</strong> runs Next.js and Socket.io on the same port, so the API route that records a bid can broadcast it to participants immediately.</li><li>Each auction session has its own <strong>Socket.io room</strong>: a client only receives events for the sale it is watching (new bid, outbid, extension).</li><li>The web app authenticates with a cookie (NextAuth), the mobile app with a <strong>JWT</strong>: the same routes accept both, without duplicating business logic.</li><li>Behind Render's proxy the WebSocket upgrade doesn't always succeed, so Socket.io <strong>falls back to long-polling</strong> instead of leaving the client stuck.</li></ul>
+    </section>
+
+    <section class="block">
+      <h2>Technical challenges</h2>
+      
+        <section class="challenge">
+          <span class="num">01</span>
+          <div>
+            <h3>Two bids in the same millisecond</h3>
+            <p>Two buyers bid on the same car at the same moment. Both requests read the current price before the other has written, both pass the check, and you end up with <strong>two “winning” bids</strong>. This bug never shows up in testing, only in real use, at the worst possible time.</p><p>The fix: every bid runs in a transaction that <strong>locks the vehicle row</strong> (<code>SELECT … FOR UPDATE</code>) and re-reads the price inside the lock. Concurrent bids on the same car run one after another; bids on different cars don't block each other.</p>
+            <pre class="code"><code>await prisma.$transaction(async (tx) =&gt; {
+  // Lock the vehicle row: concurrent bids go through one at a time
+  await tx.$queryRaw`SELECT 1 FROM voitures WHERE id = ${voitureId} FOR UPDATE`
+
+  // The price is re-read INSIDE the lock, never before
+  const prixActuel = await meilleureMise(tx, sessionId, voitureId)
+  if (montant &lt; prixActuel + palier) return { insuffisant: true }
+
+  await tx.mise.updateMany({ where: { voitureId, estGagnante: true },
+                             data: { estGagnante: false } })
+  return tx.mise.create({ data: { montant, voitureId, estGagnante: true } })
+})</code></pre>
+          </div>
+        </section>
+        <section class="challenge">
+          <span class="num">02</span>
+          <div>
+            <h3>The last-second bid</h3>
+            <p>Without a safeguard, bidding 2 seconds before the end wins without giving anyone time to respond. The regulation requires an extension.</p><p>Any bid placed in the <strong>last 3 minutes</strong> pushes the end back by 3 minutes, in the same transaction as the bid. A <code>soft-close</code> event sends the new end time to every participant so all countdowns stay in sync.</p>
+            
+          </div>
+        </section>
+        <section class="challenge">
+          <span class="num">03</span>
+          <div>
+            <h3>Several cars in one sale</h3>
+            <p>A session groups several vehicles. The first version computed the current price <strong>per session</strong>: a bid on one car changed the price shown for another.</p><p>I tied each bid to its car and recomputed price, winning bid and outbid alerts <strong>per vehicle</strong>. Real-time events carry the car's id, so a screen ignores the ones that don't concern it.</p>
+            
+          </div>
+        </section>
+        <section class="challenge">
+          <span class="num">04</span>
+          <div>
+            <h3>The winner who doesn't pay</h3>
+            <p>If the winning bidder doesn't pay within 48 hours, the vehicle must be put back up for sale. Originally this depended on a button an administrator had to remember to click.</p><p>An automatic job checks deadlines <strong>every hour and at server startup</strong>, to catch anything missed during a restart. It and the manual button call the same function, guarded so that a payment is never processed twice.</p>
+            
+          </div>
+        </section>
+    </section>
+
+    <section class="block two-col">
+      <div>
+        <h2>What I did</h2>
+        <ul class="points"><li>The real-time layer: Socket.io server, per-session rooms, bid, outbid and extension events.</li><li>Concurrent bid safety and per-vehicle pricing.</li><li>Email and WhatsApp notifications at key steps (outbid, award, payment…).</li><li>Automatic resale of unpaid lots.</li><li>Most of the Expo mobile app: sign-up with photo, catalog, live bidding, deposit, payment, certificates.</li></ul>
+        <p class="note">Alpha Oumar Diallo set up the project structure, the data model and the Render deployment.</p>
+      </div>
+      <div>
+        <h2>Outcome</h2>
+        <ul class="points"><li>All 68 tasks of the specification delivered and checked by a final functional audit.</li><li>Real-time bidding validated between the web app and a physical phone.</li><li>Bachelor's final project graded <strong>16/20</strong>, deployed as a demo on Render.</li><li>CinetPay payments and WhatsApp Business integrated but running in <strong>simulation mode</strong>: only the merchant accounts are missing to go live.</li></ul>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Screenshots</h2>
+      <div class="shots"><a href="../assets/projects/douane-encheres/02-dashboard-agent.png" target="_blank" rel="noopener"><img src="../assets/projects/douane-encheres/02-dashboard-agent.png" alt="Customs officer dashboard: vehicles to process and ongoing sessions" loading="lazy" width="1851" height="969" /></a><a href="../assets/projects/douane-encheres/03-liste-voitures.png" target="_blank" rel="noopener"><img src="../assets/projects/douane-encheres/03-liste-voitures.png" alt="List of seized vehicles, with status and starting price" loading="lazy" width="1851" height="969" /></a></div>
+    </section>
+
+    <section class="cta">
+      <h2>A project with real-time features or demanding business rules?</h2>
+      <a class="btn" href="../index.html#contact">Let's talk →</a>
+    </section>
+  </article>
+</main>
+<footer class="wrap foot"><span>Malick Ba</span><span>Thiès, Sénégal</span></footer>
+<script>
+/* Bascule FR / EN : même clé de mémorisation que le portfolio, pour garder la langue d'une page à l'autre */
+(function () {
+  "use strict";
+  const KEY = "portfolio-lang";
+  const TITLES = {"fr": "Douane Enchères SN — Étude de cas · Malick Ba", "en": "Douane Enchères SN — Case study · Malick Ba"};
+  const SWITCH = {"fr": "View in English", "en": "Voir en français"};
+  const btn = document.getElementById("langToggle");
+  const back = document.querySelector("[data-lang-text]");
+  const backText = JSON.parse(back.dataset.langText);
+
+  function initial() {
+    try {
+      const saved = localStorage.getItem(KEY);
+      if (saved === "fr" || saved === "en") return saved;
+    } catch (e) { /* stockage indisponible */ }
+    return (navigator.language || "fr").toLowerCase().startsWith("fr") ? "fr" : "en";
+  }
+
+  function apply(lang) {
+    document.querySelectorAll("article[data-lang]").forEach((a) => { a.hidden = a.dataset.lang !== lang; });
+    document.documentElement.lang = lang;
+    document.title = TITLES[lang];
+    back.textContent = backText[lang];
+    btn.textContent = lang === "fr" ? "EN" : "FR";
+    btn.setAttribute("aria-label", SWITCH[lang]);
+  }
+
+  let lang = initial();
+  apply(lang);
+  btn.addEventListener("click", () => {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(KEY, lang); } catch (e) { /* ignoré */ }
+    apply(lang);
+  });
+})();
+
+</script>
+</body>
+</html>

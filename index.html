@@ -516,6 +516,16 @@
     border-top: 1px solid var(--border);
   }
   .card-meta .extra { color: var(--accent); font-weight: 500; }
+  .case-link {
+    align-self: flex-start;
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+  .case-link:hover { color: var(--ink); }
 
   /* Carte phare : média d'un côté, texte de l'autre (côtés alternés) */
   .project-card.featured { flex-direction: row; }
@@ -1069,7 +1079,7 @@
           <a href="#projects" class="btn btn-ghost" data-i18n="hero.projects">Voir mes projets</a>
         </div>
         <ul class="hero-facts">
-          <li data-i18n="hero.fact1"><b>1</b> plateforme en production</li>
+          <li data-i18n="hero.fact1"><b>1</b> plateforme déployée en ligne</li>
           <li data-i18n="hero.fact2"><b>1</b> commande client en cours</li>
           <li data-i18n="hero.fact3"><b>4</b> applications développées</li>
         </ul>
@@ -1212,7 +1222,7 @@
     "hero.lede": "I design and build your web platforms, mobile apps and real-time backends, from mockup to production, with documented code your team can take over.",
     "hero.cta": "Let's discuss your project →",
     "hero.projects": "See my projects",
-    "hero.fact1": "<b>1</b> platform in production",
+    "hero.fact1": "<b>1</b> platform deployed online",
     "hero.fact2": "<b>1</b> client project in progress",
     "hero.fact3": "<b>4</b> apps built",
     "hero.status": "Available for freelance work · 100% remote · GMT (1 h from Paris)",
@@ -1248,6 +1258,7 @@
     "projects.thumbs": "More previews",
     "projects.thumb": "View image {i} of {n}",
     "projects.gallery": "Open the gallery",
+    "projects.case": "Read the case study",
 
     "skills.eyebrow": "Skills",
     "skills.title": "My toolbox",
@@ -1377,6 +1388,7 @@
       id: "douane-encheres",
       title: "Douane Enchères SN",
       featured: true,
+      caseStudy: "etudes/douane-encheres.html",
       desc: {
         fr: "Plateforme d'enchères en ligne pour les véhicules saisis par la douane, avec mises en temps réel pour les acheteurs du Port de Dakar.",
         en: "Online auction platform for vehicles seized by customs, with real-time bidding for buyers at the Port of Dakar.",
@@ -1387,7 +1399,7 @@
       },
       stack: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Socket.io", "React Native"],
       team: ["Alpha Oumar Diallo"],
-      extra: [[{ fr: "Statut", en: "Status" }, { fr: "En production — Render", en: "In production — Render" }]],
+      extra: [[{ fr: "Statut", en: "Status" }, { fr: "Déployé en démo — Render", en: "Demo deployment — Render" }]],
       images: [
         { src: "assets/projects/douane-encheres/01-dashboard-igf.png", alt: { fr: "Tableau de bord agent IGF de Douane Enchères SN, avec adjudications, cautions séquestrées et conformité des paiements", en: "IGF officer dashboard on Douane Enchères SN, with awarded lots, escrowed deposits and payment compliance" } },
         { src: "assets/projects/douane-encheres/02-dashboard-agent.png", alt: { fr: "Tableau de bord d'un agent douane sur Douane Enchères SN, avec les voitures à traiter et les sessions en cours", en: "Customs officer dashboard on Douane Enchères SN, with vehicles to process and ongoing sessions" } },
@@ -1535,6 +1547,7 @@
           <p class="desc">${esc(p.desc)}</p>
           <p class="role"><b>${esc(t("projects.role", "Mon rôle"))}</b>${esc(p.role)}</p>
           <div class="stack-row">${p.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div>
+          ${p.caseStudy ? `<a class="case-link" href="${esc(p.caseStudy)}">${esc(t("projects.case", "Lire l'étude de cas"))} <span aria-hidden="true">→</span></a>` : ""}
           ${p.team.length || p.extra.length ? `<div class="card-meta">
             ${p.team.length ? `<span>${esc(t("projects.with", "avec"))} ${esc(p.team.join(", "))}</span>` : ""}
             ${p.extra.map(([k, v]) => `<span class="extra">${esc(k)}${colon}${esc(v)}</span>`).join("")}
