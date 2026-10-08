@@ -188,6 +188,21 @@
     mask-image: linear-gradient(to right, black calc(100% - 18px), transparent);
   }
   .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links { margin-left: auto; }
+  .lang-toggle {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 11px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
   .nav-links a {
     text-decoration: none;
     color: var(--ink-dim);
@@ -968,12 +983,13 @@
       malick
     </a>
     <ul class="nav-links">
-      <li><a href="#about" data-nav="about">À propos</a></li>
-      <li><a href="#services" data-nav="services">Services</a></li>
-      <li><a href="#projects" data-nav="projects">Projets</a></li>
-      <li><a href="#skills" data-nav="skills">Compétences</a></li>
-      <li><a href="#contact" data-nav="contact">Contact</a></li>
+      <li><a href="#about" data-nav="about" data-i18n="nav.about">À propos</a></li>
+      <li><a href="#services" data-nav="services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#projects" data-nav="projects" data-i18n="nav.projects">Projets</a></li>
+      <li><a href="#skills" data-nav="skills" data-i18n="nav.skills">Compétences</a></li>
+      <li><a href="#contact" data-nav="contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
+    <button type="button" class="lang-toggle" id="langToggle" aria-label="View the site in English" data-i18n-attr="aria-label:lang.switch">EN</button>
   </div>
 </nav>
 
@@ -981,21 +997,21 @@
   <header class="hero">
     <div class="wrap hero-grid">
       <div class="hero-inner">
-        <span class="eyebrow">Thiès, Sénégal · missions à distance</span>
+        <span class="eyebrow" data-i18n="hero.eyebrow">Thiès, Sénégal · missions à distance</span>
         <h1>Malick Ba</h1>
-        <p class="role">Développeur Full-Stack · Web &amp; Mobile</p>
-        <p class="lede">
+        <p class="role" data-i18n="hero.role">Développeur Full-Stack · Web &amp; Mobile</p>
+        <p class="lede" data-i18n="hero.lede">
           Je conçois et développe vos plateformes web, applications mobiles
           et backends temps réel, de la maquette à la mise en production,
           avec un code documenté que votre équipe pourra reprendre.
         </p>
         <div class="hero-cta">
-          <a href="#contact" class="btn btn-primary">Discuter de votre projet →</a>
-          <a href="#projects" class="btn btn-ghost">Voir mes projets</a>
+          <a href="#contact" class="btn btn-primary" data-i18n="hero.cta">Discuter de votre projet →</a>
+          <a href="#projects" class="btn btn-ghost" data-i18n="hero.projects">Voir mes projets</a>
         </div>
         <div class="status-line">
           <span class="status-dot available"></span>
-          Disponible pour missions freelance · 100 % à distance · GMT (1 h de Paris)
+          <span data-i18n="hero.status">Disponible pour missions freelance · 100 % à distance · GMT (1 h de Paris)</span>
         </div>
       </div>
       <div class="hero-photo">
@@ -1007,15 +1023,15 @@
   <section id="about" class="section">
     <div class="wrap about-grid">
       <div>
-        <span class="eyebrow">À propos</span>
-        <h2 style="margin-top:10px;">Comprendre avant de construire</h2>
+        <span class="eyebrow" data-i18n="about.eyebrow">À propos</span>
+        <h2 style="margin-top:10px;" data-i18n="about.title">Comprendre avant de construire</h2>
         <div class="about-copy" style="margin-top:22px;">
-          <p>
+          <p data-i18n="about.p1">
             Faire fonctionner un système ne me suffit pas : je veux comprendre
             pourquoi il fonctionne, jusqu'à pouvoir l'expliquer et le
             reconstruire à froid.
           </p>
-          <p>
+          <p data-i18n="about.p2">
             Je prends en charge le backend, les intégrations temps réel et
             le mobile de bout en bout, et je sais m'intégrer à une équipe :
             la plupart de mes projets sont menés en binôme avec
@@ -1025,14 +1041,14 @@
         </div>
         <div class="chip-cluster">
           <span class="chip">Backend</span>
-          <span class="chip">Intégrations complexes</span>
+          <span class="chip" data-i18n="about.chip.integrations">Intégrations complexes</span>
           <span class="chip">Mobile</span>
         </div>
       </div>
       <ul class="fact-list">
-        <li><span class="k">Localisation</span><span>Thiès, Sénégal</span></li>
-        <li><span class="k">Formation</span><span>Licence Développement et Administration d'Applications Web (D2A) — UFR SATIC, Université Alioune Diop de Bambey (UADB)</span></li>
-        <li><span class="k">Prochaine étape</span><span>Master IA / Big Data — Université Gaston Berger (UGB)<span class="badge">en attente</span></span></li>
+        <li><span class="k" data-i18n="about.location">Localisation</span><span data-i18n="about.location.value">Thiès, Sénégal</span></li>
+        <li><span class="k" data-i18n="about.education">Formation</span><span data-i18n="about.education.value">Licence Développement et Administration d'Applications Web (D2A) — UFR SATIC, Université Alioune Diop de Bambey (UADB)</span></li>
+        <li><span class="k" data-i18n="about.next">Prochaine étape</span><span data-i18n="about.next.value">Master IA / Big Data — Université Gaston Berger (UGB)<span class="badge">en attente</span></span></li>
       </ul>
     </div>
   </section>
@@ -1041,36 +1057,36 @@
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Services</span>
-        <h2>Ce que je peux faire pour vous</h2>
+        <h2 data-i18n="services.title">Ce que je peux faire pour vous</h2>
       </div>
       <div class="service-grid">
         <article class="service-card">
           <span class="service-num">01</span>
-          <h3>Plateformes web</h3>
-          <p>Applications métier, espaces clients, back-offices et tableaux de bord, avec authentification, rôles et paiement.</p>
+          <h3 data-i18n="services.web.title">Plateformes web</h3>
+          <p data-i18n="services.web.desc">Applications métier, espaces clients, back-offices et tableaux de bord, avec authentification, rôles et paiement.</p>
           <div class="stack-row"><span class="chip">Next.js</span><span class="chip">Laravel</span><span class="chip">PostgreSQL</span></div>
         </article>
         <article class="service-card">
           <span class="service-num">02</span>
-          <h3>Applications mobiles</h3>
-          <p>Apps Android et iOS à partir d'une seule base de code, connectées à votre API, avec notifications, visio et gestion de comptes.</p>
+          <h3 data-i18n="services.mobile.title">Applications mobiles</h3>
+          <p data-i18n="services.mobile.desc">Apps Android et iOS à partir d'une seule base de code, connectées à votre API, avec notifications, visio et gestion de comptes.</p>
           <div class="stack-row"><span class="chip">Flutter</span><span class="chip">React Native</span><span class="chip">Firebase</span></div>
         </article>
         <article class="service-card">
           <span class="service-num">03</span>
-          <h3>API &amp; temps réel</h3>
-          <p>Backends REST, enchères, messagerie et mises à jour en direct, intégrations de services tiers, conteneurisation.</p>
+          <h3 data-i18n="services.api.title">API &amp; temps réel</h3>
+          <p data-i18n="services.api.desc">Backends REST, enchères, messagerie et mises à jour en direct, intégrations de services tiers, conteneurisation.</p>
           <div class="stack-row"><span class="chip">Node.js</span><span class="chip">Socket.io</span><span class="chip">Docker</span></div>
         </article>
       </div>
 
       <div class="process">
-        <span class="eyebrow">Comment je travaille</span>
+        <span class="eyebrow" data-i18n="process.title">Comment je travaille</span>
         <ol class="process-steps">
-          <li><b>Échange</b><span>Un appel pour cerner votre besoin et vos contraintes.</span></li>
-          <li><b>Devis</b><span>Périmètre, étapes et délais écrits noir sur blanc.</span></li>
-          <li><b>Sprints</b><span>Une démo à chaque étape, sur un environnement de test.</span></li>
-          <li><b>Livraison</b><span>Mise en ligne, code source et documentation remis.</span></li>
+          <li data-i18n="process.1"><b>Échange</b><span>Un appel pour cerner votre besoin et vos contraintes.</span></li>
+          <li data-i18n="process.2"><b>Devis</b><span>Périmètre, étapes et délais écrits noir sur blanc.</span></li>
+          <li data-i18n="process.3"><b>Sprints</b><span>Une démo à chaque étape, sur un environnement de test.</span></li>
+          <li data-i18n="process.4"><b>Livraison</b><span>Mise en ligne, code source et documentation remis.</span></li>
         </ol>
       </div>
     </div>
@@ -1079,8 +1095,8 @@
   <section id="projects" class="section">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Projets</span>
-        <h2>Ce que j'ai construit</h2>
+        <span class="eyebrow" data-i18n="projects.eyebrow">Projets</span>
+        <h2 data-i18n="projects.title">Ce que j'ai construit</h2>
       </div>
       <div class="project-grid" id="projectGrid"></div>
     </div>
@@ -1089,8 +1105,8 @@
   <section id="skills" class="section">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Compétences</span>
-        <h2>Ma boîte à outils</h2>
+        <span class="eyebrow" data-i18n="skills.eyebrow">Compétences</span>
+        <h2 data-i18n="skills.title">Ma boîte à outils</h2>
       </div>
       <div class="skills-grid" id="skillsGrid"></div>
     </div>
@@ -1100,16 +1116,189 @@
     <div class="contact-band">
       <div class="wrap">
         <span class="eyebrow">Contact</span>
-        <h2>On travaille ensemble ?</h2>
+        <h2 data-i18n="contact.title">On travaille ensemble ?</h2>
         <div class="contact-links" id="contactLinks"></div>
         <div class="foot-line">
-          <span>conçu &amp; développé par Malick</span>
-          <span>Thiès, Sénégal</span>
+          <span data-i18n="foot.credit">conçu &amp; développé par Malick Ba</span>
+          <span data-i18n="foot.place">Thiès, Sénégal</span>
         </div>
       </div>
     </div>
   </section>
 </main>
+
+<script>
+/* ============================================================
+   TRADUCTION FR / EN
+   Le français reste écrit dans le HTML et sert de référence :
+   seul l'anglais est décrit ici. Chaque élément traduisible porte
+   data-i18n (texte), data-i18n-html (texte avec balises) ou
+   data-i18n-attr="attribut:clé;attribut:clé".
+   ============================================================ */
+(function () {
+  "use strict";
+
+  const EN = {
+    "meta.title": "Malick Ba — Freelance Full-Stack Developer",
+    "nav.about": "About",
+    "nav.services": "Services",
+    "nav.projects": "Projects",
+    "nav.skills": "Skills",
+    "nav.contact": "Contact",
+    "lang.switch": "Afficher le site en français",
+
+    "hero.eyebrow": "Thiès, Senegal · remote work",
+    "hero.role": "Full-Stack Developer · Web &amp; Mobile",
+    "hero.lede": "I design and build your web platforms, mobile apps and real-time backends, from mockup to production, with documented code your team can take over.",
+    "hero.cta": "Let's discuss your project →",
+    "hero.projects": "See my projects",
+    "hero.status": "Available for freelance work · 100% remote · GMT (1 h from Paris)",
+
+    "about.eyebrow": "About",
+    "about.title": "Understand before building",
+    "about.p1": "Making a system work isn't enough for me: I want to understand why it works, to the point where I can explain it and rebuild it from scratch.",
+    "about.p2": "I handle the backend, real-time integrations and mobile end to end, and I know how to fit into a team: most of my projects are built in tandem with <strong>Alpha Oumar Diallo</strong>, on a shared repository with shared conventions.",
+    "about.chip.integrations": "Complex integrations",
+    "about.location": "Location",
+    "about.location.value": "Thiès, Senegal",
+    "about.education": "Education",
+    "about.education.value": "Bachelor's degree in Web Application Development and Administration (D2A) — UFR SATIC, Alioune Diop University of Bambey (UADB)",
+    "about.next": "Next step",
+    "about.next.value": "Master's in AI / Big Data — Gaston Berger University (UGB)<span class=\"badge\">pending</span>",
+
+    "services.title": "What I can do for you",
+    "services.web.title": "Web platforms",
+    "services.web.desc": "Business applications, client portals, back-offices and dashboards, with authentication, roles and payments.",
+    "services.mobile.title": "Mobile apps",
+    "services.mobile.desc": "Android and iOS apps from a single codebase, connected to your API, with notifications, video calls and account management.",
+    "services.api.title": "APIs &amp; real time",
+    "services.api.desc": "REST backends, auctions, messaging and live updates, third-party integrations, containerization.",
+    "process.title": "How I work",
+    "process.1": "<b>Discovery</b><span>A call to understand your needs and constraints.</span>",
+    "process.2": "<b>Quote</b><span>Scope, milestones and deadlines, in writing.</span>",
+    "process.3": "<b>Sprints</b><span>A demo at every stage, on a test environment.</span>",
+    "process.4": "<b>Delivery</b><span>Go-live, with source code and documentation handed over.</span>",
+
+    "projects.eyebrow": "Projects",
+    "projects.title": "What I've built",
+    "projects.role": "My role",
+    "projects.with": "with",
+    "projects.thumbs": "More previews",
+    "projects.thumb": "View image {i} of {n}",
+    "projects.gallery": "Open the gallery",
+
+    "skills.eyebrow": "Skills",
+    "skills.title": "My toolbox",
+
+    "contact.title": "Shall we work together?",
+    "foot.credit": "designed &amp; built by Malick Ba",
+    "foot.place": "Thiès, Senegal",
+
+    "lightbox.label": "Project gallery",
+    "lightbox.close": "Close the gallery",
+    "lightbox.prev": "Previous image",
+    "lightbox.next": "Next image",
+
+    "chat.open": "Open the portfolio assistant",
+    "chat.title": "Malick's assistant",
+    "chat.subtitle": "Ask a question about his profile",
+    "chat.close": "Close the assistant",
+    "chat.chip1": "Is he available for a project?",
+    "chat.chip2": "Tell me about the customs project",
+    "chat.chip3": "How can I contact him?",
+    "chat.placeholder": "Type your question…",
+    "chat.send": "Send",
+    "chat.disclaimer": "AI-generated answers, based solely on Malick's profile.",
+    "chat.greet": "Hi! Ask me anything about Malick's profile, projects or skills.",
+    "chat.limit": "You've reached the limit of this demo. To go further, email me directly: malick1.ba@uadb.edu.sn",
+    "chat.error": "Sorry, something went wrong. Please try again in a moment.",
+    "chat.offline": "Unable to connect right now.",
+  };
+
+  const STORAGE_KEY = "portfolio-lang";
+  const listeners = [];
+
+  // Choix mémorisé, sinon langue du navigateur (français par défaut pour les francophones)
+  function initialLang() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === "fr" || saved === "en") return saved;
+    } catch (e) { /* stockage indisponible : on ignore */ }
+    const nav = (navigator.language || "fr").toLowerCase();
+    return nav.startsWith("fr") ? "fr" : "en";
+  }
+
+  // Mémorise le français d'origine la première fois, pour pouvoir y revenir
+  function original(el, slot, read) {
+    const key = "i18nFr" + slot;
+    if (!(key in el.dataset)) el.dataset[key] = read();
+    return el.dataset[key];
+  }
+
+  function applyStatic(root) {
+    const en = I18N.lang === "en";
+    root.querySelectorAll("[data-i18n]").forEach((el) => {
+      const fr = original(el, "Text", () => el.innerHTML);
+      el.innerHTML = en ? EN[el.dataset.i18n] : fr;
+    });
+    root.querySelectorAll("[data-i18n-attr]").forEach((el) => {
+      el.dataset.i18nAttr.split(";").forEach((pair) => {
+        const [attr, key] = pair.split(":");
+        const slot = "Attr" + attr.replace(/[^a-z]/gi, "");
+        const fr = original(el, slot, () => el.getAttribute(attr) || "");
+        el.setAttribute(attr, en ? EN[key] : fr);
+      });
+    });
+  }
+
+  const I18N = {
+    lang: initialLang(),
+    // Texte de l'interface générée en JS : le français est passé en repli
+    t(key, fr, vars) {
+      let s = I18N.lang === "en" && EN[key] ? EN[key] : fr;
+      if (vars) Object.keys(vars).forEach((k) => { s = s.replace("{" + k + "}", vars[k]); });
+      return s;
+    },
+    // Valeur bilingue { fr, en } dans les données ; une chaîne simple est commune aux deux langues
+    pick(v) {
+      if (v && typeof v === "object" && !Array.isArray(v) && "fr" in v) return v[I18N.lang] ?? v.fr;
+      if (Array.isArray(v)) return v.map(I18N.pick);
+      if (v && typeof v === "object") {
+        const out = {};
+        Object.keys(v).forEach((k) => { out[k] = I18N.pick(v[k]); });
+        return out;
+      }
+      return v;
+    },
+    apply() {
+      const en = I18N.lang === "en";
+      document.documentElement.lang = I18N.lang;
+      original(document.documentElement, "Title", () => document.title);
+      document.title = en ? EN["meta.title"] : document.documentElement.dataset.i18nFrTitle;
+      applyStatic(document);
+      const btn = document.getElementById("langToggle");
+      if (btn) btn.textContent = en ? "FR" : "EN";
+    },
+    set(lang) {
+      if (lang === I18N.lang) return;
+      I18N.lang = lang;
+      try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* ignoré */ }
+      I18N.apply();
+      listeners.forEach((fn) => fn(lang));
+    },
+    onChange(fn) { listeners.push(fn); },
+  };
+  window.I18N = I18N;
+
+  // Le bouton et une partie du balisage (galerie, assistant) sont plus bas dans la page
+  document.addEventListener("DOMContentLoaded", () => {
+    I18N.apply();
+    document.getElementById("langToggle").addEventListener("click", () => {
+      I18N.set(I18N.lang === "en" ? "fr" : "en");
+    });
+  });
+})();
+</script>
 
 <script>
 (function () {
@@ -1118,98 +1307,135 @@
   /* ============================================================
      DONNÉES — modifie uniquement ces tableaux pour mettre à jour
      le contenu (projets et compétences sont rendus automatiquement).
+     Un texte traduit s'écrit { fr: "…", en: "…" } ; une chaîne
+     simple (nom de techno, nom propre) sert dans les deux langues.
      ============================================================ */
   const PROJECTS = [
     {
       id: "douane-encheres",
       title: "Douane Enchères SN",
-      desc: "Plateforme d'enchères en ligne pour les véhicules saisis par la douane, avec mises en temps réel pour les acheteurs du Port de Dakar.",
-      role: "Backend des enchères en temps réel (Socket.io), application mobile compagnon pour les acheteurs.",
+      desc: {
+        fr: "Plateforme d'enchères en ligne pour les véhicules saisis par la douane, avec mises en temps réel pour les acheteurs du Port de Dakar.",
+        en: "Online auction platform for vehicles seized by customs, with real-time bidding for buyers at the Port of Dakar.",
+      },
+      role: {
+        fr: "Backend des enchères en temps réel (Socket.io), application mobile compagnon pour les acheteurs.",
+        en: "Real-time auction backend (Socket.io) and a companion mobile app for buyers.",
+      },
       stack: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Socket.io", "React Native"],
       team: ["Alpha Oumar Diallo"],
-      extra: [["Statut", "En production — Render"]],
+      extra: [[{ fr: "Statut", en: "Status" }, { fr: "En production — Render", en: "In production — Render" }]],
       images: [
-        { src: "assets/projects/douane-encheres/01-dashboard-igf.png", alt: "Tableau de bord agent IGF de Douane Enchères SN, avec adjudications, cautions séquestrées et conformité des paiements" },
-        { src: "assets/projects/douane-encheres/02-dashboard-agent.png", alt: "Tableau de bord d'un agent douane sur Douane Enchères SN, avec les voitures à traiter et les sessions en cours" },
-        { src: "assets/projects/douane-encheres/03-liste-voitures.png", alt: "Liste des voitures saisies enregistrées sur Douane Enchères SN, avec statut et prix de départ" },
+        { src: "assets/projects/douane-encheres/01-dashboard-igf.png", alt: { fr: "Tableau de bord agent IGF de Douane Enchères SN, avec adjudications, cautions séquestrées et conformité des paiements", en: "IGF officer dashboard on Douane Enchères SN, with awarded lots, escrowed deposits and payment compliance" } },
+        { src: "assets/projects/douane-encheres/02-dashboard-agent.png", alt: { fr: "Tableau de bord d'un agent douane sur Douane Enchères SN, avec les voitures à traiter et les sessions en cours", en: "Customs officer dashboard on Douane Enchères SN, with vehicles to process and ongoing sessions" } },
+        { src: "assets/projects/douane-encheres/03-liste-voitures.png", alt: { fr: "Liste des voitures saisies enregistrées sur Douane Enchères SN, avec statut et prix de départ", en: "List of seized vehicles on Douane Enchères SN, with status and starting price" } },
       ],
     },
     {
       id: "ndaanaan-institut",
       title: "NDAANAAN Institut",
-      desc: "Commande client : plateforme d'enseignement islamique à distance (Coran, Fiqh, arabe), avec application élèves/enseignants, back-office du directeur et API.",
-      role: "Tout l'espace élève de l'app mobile (inscription, cours, visio, notifications, profil) et la partie pédagogie du back-office.",
+      desc: {
+        fr: "Commande client : plateforme d'enseignement islamique à distance (Coran, Fiqh, arabe), avec application élèves/enseignants, back-office du directeur et API.",
+        en: "Client project: online Islamic education platform (Quran, Fiqh, Arabic), with a student/teacher mobile app, a director's back-office and an API.",
+      },
+      role: {
+        fr: "Tout l'espace élève de l'app mobile (inscription, cours, visio, notifications, profil) et la partie pédagogie du back-office.",
+        en: "The entire student side of the mobile app (sign-up, courses, video calls, notifications, profile) and the teaching section of the back-office.",
+      },
       stack: ["Flutter", "Riverpod", "Laravel 12", "Next.js", "Firebase", "Figma"],
       team: ["Alpha Oumar Diallo"],
-      extra: [["Statut", "Commande client — en développement"]],
-      video: { src: "assets/videos/ndaanaan-institut-demo.mp4", poster: "assets/projects/ndaanaan-institut/poster.jpg", alt: "Prototype de l'application NDAANAAN Institut, écran d'accueil élève / enseignant" },
+      extra: [[{ fr: "Statut", en: "Status" }, { fr: "Commande client — en développement", en: "Client project — in development" }]],
+      video: { src: "assets/videos/ndaanaan-institut-demo.mp4", poster: "assets/projects/ndaanaan-institut/poster.jpg", alt: { fr: "Prototype de l'application NDAANAAN Institut, écran d'accueil élève / enseignant", en: "Prototype of the NDAANAAN Institut app, student / teacher welcome screen" } },
     },
     {
       id: "natt-bi",
       title: "Natt-Bi (Tontine App)",
-      desc: "Application de gestion de tontines : cycles de cotisation, membres et suivi des tours de versement.",
-      role: "Modèle de données des tontines (membres, cycles, cotisations) et écrans de gestion des cycles.",
+      desc: {
+        fr: "Application de gestion de tontines : cycles de cotisation, membres et suivi des tours de versement.",
+        en: "Management app for tontines (rotating savings groups): contribution cycles, members and payout tracking.",
+      },
+      role: {
+        fr: "Modèle de données des tontines (membres, cycles, cotisations) et écrans de gestion des cycles.",
+        en: "Tontine data model (members, cycles, contributions) and the cycle management screens.",
+      },
       stack: ["Laravel 11", "PostgreSQL", "Eloquent", "Blade"],
       team: ["Alpha Oumar Diallo", "Sira", "El Hadj"],
       extra: [],
       images: [
-        { src: "assets/projects/natt-bi/01-dashboard-admin.png", alt: "Tableau de bord administrateur de Natt-Bi, avec membres, tontines actives et cotisations récentes" },
-        { src: "assets/projects/natt-bi/02-landing-page.png", alt: "Page d'accueil de Natt-Bi présentant la plateforme de gestion collaborative de tontines" },
+        { src: "assets/projects/natt-bi/01-dashboard-admin.png", alt: { fr: "Tableau de bord administrateur de Natt-Bi, avec membres, tontines actives et cotisations récentes", en: "Natt-Bi admin dashboard, with members, active tontines and recent contributions" } },
+        { src: "assets/projects/natt-bi/02-landing-page.png", alt: { fr: "Page d'accueil de Natt-Bi présentant la plateforme de gestion collaborative de tontines", en: "Natt-Bi landing page presenting the collaborative tontine management platform" } },
       ],
     },
     {
       id: "buntu-liggeey",
       title: "buntu-liggeey",
-      desc: "Application desktop de mise en relation pour l'emploi, pensée pour les jeunes sans réseau professionnel.",
-      role: "Conception du modèle métier (UML) et de toute la couche d'accès aux données.",
+      desc: {
+        fr: "Application desktop de mise en relation pour l'emploi, pensée pour les jeunes sans réseau professionnel.",
+        en: "Desktop job-matching app, built for young people without a professional network.",
+      },
+      role: {
+        fr: "Conception du modèle métier (UML) et de toute la couche d'accès aux données.",
+        en: "Domain model design (UML) and the entire data access layer.",
+      },
       stack: ["Java 21", "JavaFX", "JDBC", "MySQL"],
       team: [],
       extra: [],
       images: [
-        { src: "assets/projects/buntu-liggeey/01-dashboard-admin.png", alt: "Tableau de bord administrateur de buntu-liggeey, avec statistiques des talents, entreprises et offres" },
+        { src: "assets/projects/buntu-liggeey/01-dashboard-admin.png", alt: { fr: "Tableau de bord administrateur de buntu-liggeey, avec statistiques des talents, entreprises et offres", en: "buntu-liggeey admin dashboard, with statistics on talents, companies and job offers" } },
       ],
     },
     {
       id: "nour",
       title: "Nour",
-      desc: "Réseau social pensé autour du Coran : partage de récitations, versets et défis d'apprentissage.",
-      role: "Idéation et design UI/UX (Figma).",
+      desc: {
+        fr: "Réseau social pensé autour du Coran : partage de récitations, versets et défis d'apprentissage.",
+        en: "Quran-centered social network: sharing recitations, verses and learning challenges.",
+      },
+      role: {
+        fr: "Idéation et design UI/UX (Figma).",
+        en: "Ideation and UI/UX design (Figma).",
+      },
       stack: ["Figma"],
-      team: ["un ami"],
-      extra: [["Statut", "Concept — maquette Figma"]],
-      video: { src: "assets/videos/nour-demo.mp4", poster: "assets/projects/nour/poster.jpg", alt: "Prototype Figma de l'application Nour, écran de connexion" },
+      team: [{ fr: "un ami", en: "a friend" }],
+      extra: [[{ fr: "Statut", en: "Status" }, { fr: "Concept — maquette Figma", en: "Concept — Figma mockup" }]],
+      video: { src: "assets/videos/nour-demo.mp4", poster: "assets/projects/nour/poster.jpg", alt: { fr: "Prototype Figma de l'application Nour, écran de connexion", en: "Figma prototype of the Nour app, sign-in screen" } },
     },
     // AJOUTER UN PROJET ICI ↓ (ajoute aussi un tableau "images" : [{ src, alt }] ou un champ "video" : { src, poster, alt })
   ];
-  window.PROJECTS_DATA = PROJECTS;
 
-  const SKILLS = {
-    "Backend": ["Node.js / Express", "Laravel", "API REST", "Socket.io", "Java"],
-    "Frontend & Mobile": ["Next.js", "React", "Flutter", "React Native", "TypeScript", "JavaFX"],
-    "Data": ["PostgreSQL", "MySQL", "Prisma", "Eloquent ORM", "Modélisation UML"],
-    "Outils": ["Git / GitHub", "Docker", "Firebase", "Render", "Figma"],
+  // Catégorie → compétences
+  const SKILLS = [
+    ["Backend", ["Node.js / Express", "Laravel", { fr: "API REST", en: "REST APIs" }, "Socket.io", "Java"]],
+    ["Frontend & Mobile", ["Next.js", "React", "Flutter", "React Native", "TypeScript", "JavaFX"]],
+    ["Data", ["PostgreSQL", "MySQL", "Prisma", "Eloquent ORM", { fr: "Modélisation UML", en: "UML modeling" }]],
+    [{ fr: "Outils", en: "Tools" }, ["Git / GitHub", "Docker", "Firebase", "Render", "Figma"]],
     // AJOUTER UNE COMPÉTENCE ICI ↓ (dans le tableau de la bonne catégorie)
-  };
+  ];
 
   const CONTACT = [
     { label: "Email", value: "malick1.ba@uadb.edu.sn", href: "mailto:malick1.ba@uadb.edu.sn" },
     { label: "GitHub", value: "github.com/Dev-knowladge", href: "https://github.com/Dev-knowladge" },
     { label: "LinkedIn", value: "linkedin.com/in/malick-bâ", href: "https://www.linkedin.com/in/malick-b%C3%A2-b798bb411/" },
-    { label: "CV", value: "Télécharger le PDF", href: "./cv-malick.pdf" },
+    { label: "CV", value: { fr: "Télécharger le PDF", en: "Download the PDF (French)" }, href: "./cv-malick.pdf" },
   ];
+
+  const { t, pick } = window.I18N;
 
   const esc = (s) => String(s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
   function renderProjects() {
+    // La galerie lit PROJECTS_DATA : on lui expose la version dans la langue courante
+    const projects = pick(PROJECTS);
+    window.PROJECTS_DATA = projects;
     const grid = document.getElementById("projectGrid");
-    grid.innerHTML = PROJECTS.map((p, pi) => {
+    grid.innerHTML = projects.map((p, pi) => {
       const imgs = p.images || [];
       const cover = imgs[0];
       const thumbs = imgs.length > 1
-        ? `<div class="project-thumbs" role="group" aria-label="Aperçus supplémentaires — ${esc(p.title)}">
+        ? `<div class="project-thumbs" role="group" aria-label="${esc(t("projects.thumbs", "Aperçus supplémentaires"))} — ${esc(p.title)}">
             ${imgs.map((im, ii) => `
-              <button type="button" class="project-thumb${ii === 0 ? " active" : ""}" data-project="${pi}" data-index="${ii}" aria-label="Voir l'image ${ii + 1} sur ${imgs.length} — ${esc(p.title)}">
+              <button type="button" class="project-thumb${ii === 0 ? " active" : ""}" data-project="${pi}" data-index="${ii}" aria-label="${esc(t("projects.thumb", "Voir l'image {i} sur {n}", { i: ii + 1, n: imgs.length }))} — ${esc(p.title)}">
                 <img src="${esc(im.src)}" alt="" loading="lazy" width="120" height="63" />
               </button>
             `).join("")}
@@ -1224,7 +1450,7 @@
           <video class="project-video" data-src="${esc(p.video.src)}" poster="${esc(p.video.poster)}" controls preload="none" playsinline aria-label="${esc(p.video.alt)}"></video>
         </div>`
         : cover ? `
-        <button type="button" class="project-cover" data-project="${pi}" data-index="0" aria-label="Voir la galerie — ${esc(p.title)}">
+        <button type="button" class="project-cover" data-project="${pi}" data-index="0" aria-label="${esc(t("projects.gallery", "Voir la galerie"))} — ${esc(p.title)}">
           <span class="cover-chrome" aria-hidden="true">
             <span class="cover-dots"><span></span><span></span><span></span></span>
             <span class="cover-url">${esc(p.id)}</span>
@@ -1232,20 +1458,22 @@
           <img src="${esc(cover.src)}" alt="${esc(cover.alt)}" loading="lazy" width="640" height="337" />
           ${imgs.length > 1 ? `<span class="project-cover-count">🖼 ${imgs.length}</span>` : ""}
         </button>` : "";
+      // Typographie : espace avant les deux-points en français seulement
+      const colon = I18N.lang === "fr" ? " : " : ": ";
       return `
       <article class="project-card">
         ${coverBlock}
         ${thumbs}
         <h3>${esc(p.title)}</h3>
         <p class="desc">${esc(p.desc)}</p>
-        <p class="role"><b>Mon rôle</b>${esc(p.role)}</p>
+        <p class="role"><b>${esc(t("projects.role", "Mon rôle"))}</b>${esc(p.role)}</p>
         <div class="stack-row">${p.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div>
         <div class="card-meta">
-          ${p.team.length ? `<span>avec ${esc(p.team.join(", "))}</span>` : ""}
-          ${p.extra.map(([k, v]) => `<span class="extra">${esc(k)} : ${esc(v)}</span>`).join("")}
+          ${p.team.length ? `<span>${esc(t("projects.with", "avec"))} ${esc(p.team.join(", "))}</span>` : ""}
+          ${p.extra.map(([k, v]) => `<span class="extra">${esc(k)}${colon}${esc(v)}</span>`).join("")}
         </div>
       </article>
-    `;
+      `;
     }).join("");
 
     grid.querySelectorAll(".project-cover, .project-thumb").forEach((btn) => {
@@ -1257,7 +1485,7 @@
 
   function renderSkills() {
     const grid = document.getElementById("skillsGrid");
-    grid.innerHTML = Object.entries(SKILLS).map(([cat, items]) => `
+    grid.innerHTML = pick(SKILLS).map(([cat, items]) => `
       <div class="skill-cat">
         <span class="eyebrow">${esc(cat)}</span>
         <div class="chip-cluster">${items.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div>
@@ -1267,7 +1495,7 @@
 
   function renderContact() {
     const wrap = document.getElementById("contactLinks");
-    wrap.innerHTML = CONTACT.map((c) => {
+    wrap.innerHTML = pick(CONTACT).map((c) => {
       const external = c.href.startsWith("http") ? ' target="_blank" rel="noopener noreferrer"' : "";
       return `
         <a href="${esc(c.href)}"${external}>
@@ -1281,12 +1509,7 @@
     }).join("");
   }
 
-  renderProjects();
-  renderSkills();
-  renderContact();
-
   /* ---- Chargement différé des vidéos démo (metadata + source seulement à l'approche du viewport) ---- */
-  const lazyVideos = Array.from(document.querySelectorAll(".project-video[data-src]"));
   const videoObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
@@ -1302,10 +1525,8 @@
     },
     { rootMargin: "300px 0px" }
   );
-  lazyVideos.forEach((v) => videoObserver.observe(v));
 
   /* ---- Reveal des cartes projet ---- */
-  const cards = Array.from(document.querySelectorAll(".project-card"));
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
@@ -1317,7 +1538,26 @@
     },
     { threshold: 0.15 }
   );
-  cards.forEach((c) => revealObserver.observe(c));
+
+  // Les cartes sont recréées à chaque changement de langue : on rebranche les observateurs
+  function wireProjects(revealed) {
+    document.querySelectorAll(".project-video[data-src]").forEach((v) => videoObserver.observe(v));
+    document.querySelectorAll(".project-card").forEach((c) => {
+      if (revealed) c.classList.add("in-view");
+      else revealObserver.observe(c);
+    });
+  }
+
+  function renderAll(revealed) {
+    renderProjects();
+    renderSkills();
+    renderContact();
+    wireProjects(revealed);
+  }
+
+  renderAll(false);
+  // Après un changement de langue, les cartes s'affichent directement (pas de nouvelle animation)
+  I18N.onChange(() => renderAll(true));
 
   /* ---- Nav active au scroll ---- */
   const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
@@ -1368,10 +1608,10 @@
 })();
 </script>
 
-<div class="lightbox-overlay" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="Galerie du projet">
-  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Fermer la galerie">✕</button>
-  <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Image précédente">←</button>
-  <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Image suivante">→</button>
+<div class="lightbox-overlay" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="Galerie du projet" data-i18n-attr="aria-label:lightbox.label">
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Fermer la galerie" data-i18n-attr="aria-label:lightbox.close">✕</button>
+  <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Image précédente" data-i18n-attr="aria-label:lightbox.prev">←</button>
+  <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Image suivante" data-i18n-attr="aria-label:lightbox.next">→</button>
   <figure class="lightbox-figure">
     <div class="lightbox-frame">
       <div class="lightbox-chrome" aria-hidden="true">
@@ -1482,7 +1722,7 @@
 </script>
 
 <div class="chat-widget" id="chatWidget">
-  <button class="chat-fab" id="chatFab" aria-haspopup="dialog" aria-expanded="false" aria-controls="chatPanel" aria-label="Ouvrir l'assistant du portfolio">
+  <button class="chat-fab" id="chatFab" aria-haspopup="dialog" aria-expanded="false" aria-controls="chatPanel" aria-label="Ouvrir l'assistant du portfolio" data-i18n-attr="aria-label:chat.open">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
     </svg>
@@ -1490,22 +1730,22 @@
   <div class="chat-panel" id="chatPanel" role="dialog" aria-modal="false" aria-labelledby="chatPanelTitle" hidden>
     <div class="chat-panel-head">
       <div>
-        <div id="chatPanelTitle" class="chat-title">Assistant de Malick</div>
-        <div class="chat-subtitle">Pose une question sur son profil</div>
+        <div id="chatPanelTitle" class="chat-title" data-i18n="chat.title">Assistant de Malick</div>
+        <div class="chat-subtitle" data-i18n="chat.subtitle">Pose une question sur son profil</div>
       </div>
-      <button class="chat-close" id="chatClose" type="button" aria-label="Fermer l'assistant">✕</button>
+      <button class="chat-close" id="chatClose" type="button" aria-label="Fermer l'assistant" data-i18n-attr="aria-label:chat.close">✕</button>
     </div>
     <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
     <div class="chat-suggestions" id="chatSuggestions">
-      <button type="button" class="chat-chip">Est-il disponible pour une mission ?</button>
-      <button type="button" class="chat-chip">Parle-moi du projet douane</button>
-      <button type="button" class="chat-chip">Comment le contacter ?</button>
+      <button type="button" class="chat-chip" data-i18n="chat.chip1">Est-il disponible pour une mission ?</button>
+      <button type="button" class="chat-chip" data-i18n="chat.chip2">Parle-moi du projet douane</button>
+      <button type="button" class="chat-chip" data-i18n="chat.chip3">Comment le contacter ?</button>
     </div>
     <form class="chat-input-row" id="chatForm">
-      <input type="text" id="chatInput" class="chat-input" placeholder="Écris ta question…" maxlength="500" autocomplete="off" />
-      <button type="submit" class="chat-send" aria-label="Envoyer">→</button>
+      <input type="text" id="chatInput" class="chat-input" placeholder="Écris ta question…" data-i18n-attr="placeholder:chat.placeholder" maxlength="500" autocomplete="off" />
+      <button type="submit" class="chat-send" aria-label="Envoyer" data-i18n-attr="aria-label:chat.send">→</button>
     </form>
-    <div class="chat-disclaimer">Réponses générées par IA, à partir du profil de Malick uniquement.</div>
+    <div class="chat-disclaimer" data-i18n="chat.disclaimer">Réponses générées par IA, à partir du profil de Malick uniquement.</div>
   </div>
 </div>
 
@@ -1542,7 +1782,7 @@
     fab.setAttribute("aria-expanded", "true");
     if (!opened) {
       opened = true;
-      addMessage("assistant", "Salut ! Pose-moi une question sur le profil, les projets ou les compétences de Malick.");
+      addMessage("assistant", I18N.t("chat.greet", "Salut ! Pose-moi une question sur le profil, les projets ou les compétences de Malick."));
     }
     input.focus();
   }
@@ -1561,7 +1801,7 @@
     text = (text || "").trim();
     if (!text || busy) return;
     if (history.length >= MAX_TURNS * 2) {
-      addMessage("assistant", "Tu as atteint la limite de cette démo. Pour aller plus loin, écris-moi directement : malick1.ba@uadb.edu.sn");
+      addMessage("assistant", I18N.t("chat.limit", "Tu as atteint la limite de cette démo. Pour aller plus loin, écris-moi directement : malick1.ba@uadb.edu.sn"));
       return;
     }
     busy = true;
@@ -1581,7 +1821,7 @@
       const data = await r.json().catch(() => ({}));
       typingEl.remove();
       if (!r.ok || !data.reply) {
-        addMessage("assistant", "Désolé, une erreur est survenue. Réessaie dans un instant.");
+        addMessage("assistant", I18N.t("chat.error", "Désolé, une erreur est survenue. Réessaie dans un instant."));
       } else {
         addMessage("assistant", data.reply);
         history.push({ role: "user", content: text });
@@ -1589,7 +1829,7 @@
       }
     } catch (e) {
       typingEl.remove();
-      addMessage("assistant", "Connexion impossible pour le moment.");
+      addMessage("assistant", I18N.t("chat.offline", "Connexion impossible pour le moment."));
     } finally {
       busy = false;
       sendBtn.disabled = false;
