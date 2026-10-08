@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Malick — Développeur Full-Stack</title>
-<meta name="description" content="Portfolio de Malick, développeur full-stack junior à Thiès, Sénégal, spécialisé en backend, intégrations temps réel et mobile." />
+<title>Malick Ba — Développeur Full-Stack freelance</title>
+<meta name="description" content="Malick Ba, développeur full-stack freelance (web et mobile) basé au Sénégal. Applications Next.js, Laravel et Flutter, backends temps réel. Missions 100 % à distance." />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Malick — Développeur Full-Stack" />
-<meta property="og:description" content="Portfolio de Malick, développeur full-stack junior à Thiès, Sénégal, spécialisé en backend, intégrations temps réel et mobile." />
+<meta property="og:title" content="Malick Ba — Développeur Full-Stack freelance" />
+<meta property="og:description" content="Malick Ba, développeur full-stack freelance (web et mobile) basé au Sénégal. Applications Next.js, Laravel et Flutter, backends temps réel. Missions 100 % à distance." />
 <meta property="og:image" content="https://malick-portfolio-foraras8e-malick4.vercel.app/assets/malick-portrait.jpg" />
 <meta property="og:url" content="https://malick-portfolio-foraras8e-malick4.vercel.app/" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Malick — Développeur Full-Stack" />
-<meta name="twitter:description" content="Portfolio de Malick, développeur full-stack junior à Thiès, Sénégal, spécialisé en backend, intégrations temps réel et mobile." />
+<meta name="twitter:title" content="Malick Ba — Développeur Full-Stack freelance" />
+<meta name="twitter:description" content="Malick Ba, développeur full-stack freelance (web et mobile) basé au Sénégal. Applications Next.js, Laravel et Flutter, backends temps réel. Missions 100 % à distance." />
 <meta name="twitter:image" content="https://malick-portfolio-foraras8e-malick4.vercel.app/assets/malick-portrait.jpg" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -150,6 +150,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
   }
   .brand {
     display: flex;
@@ -176,7 +177,8 @@
     gap: 28px;
     list-style: none;
     margin: 0;
-    padding: 0;
+    /* la zone de fondu reste vide quand tous les liens tiennent */
+    padding: 0 18px 0 0;
     font-size: 0.88rem;
     overflow-x: auto;
     scrollbar-width: none;
@@ -353,6 +355,11 @@
     width: 7px; height: 7px; border-radius: 50%;
     background: var(--status);
     box-shadow: 0 0 0 3px var(--status-bg);
+  }
+  /* Variante "disponible" : l'accent remplace le doré réservé à l'attente */
+  .status-dot.available {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
   }
 
   /* ============================================================
@@ -662,6 +669,54 @@
     .lightbox-next { right: 8px; }
   }
 
+  /* ---- Services ---- */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 26px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.2s ease;
+  }
+  .service-card:hover { border-color: var(--accent); }
+  .service-card h3 { font-size: 1.18rem; }
+  .service-card p { color: var(--ink-dim); font-size: 0.94rem; flex: 1 1 auto; }
+  .service-num { font-family: var(--font-mono); font-size: 0.74rem; color: var(--accent); }
+
+  .process { margin-top: 48px; }
+  .process-steps {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    counter-reset: step;
+  }
+  .process-steps li {
+    counter-increment: step;
+    padding: 18px 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9rem;
+  }
+  .process-steps b::before {
+    content: counter(step, decimal-leading-zero) " ";
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.74rem;
+    color: var(--accent);
+  }
+  .process-steps span { color: var(--ink-dim); }
+
   /* ---- Skills ---- */
   .skills-grid {
     display: grid;
@@ -738,6 +793,8 @@
   @media (max-width: 860px) {
     .about-grid { grid-template-columns: 1fr; gap: 36px; }
     .project-grid { grid-template-columns: 1fr 1fr; }
+    .service-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
     .hero-grid { flex-direction: column-reverse; gap: 36px; }
     .hero-photo { width: 168px; align-self: flex-start; }
   }
@@ -747,6 +804,7 @@
     .hero { padding: 64px 0 56px; }
     .section { padding: 56px 0; }
     .project-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
     .contact-links { grid-template-columns: 1fr; }
     .fact-list li { grid-template-columns: 1fr; gap: 4px; }
   }
@@ -911,6 +969,7 @@
     </a>
     <ul class="nav-links">
       <li><a href="#about" data-nav="about">À propos</a></li>
+      <li><a href="#services" data-nav="services">Services</a></li>
       <li><a href="#projects" data-nav="projects">Projets</a></li>
       <li><a href="#skills" data-nav="skills">Compétences</a></li>
       <li><a href="#contact" data-nav="contact">Contact</a></li>
@@ -922,21 +981,21 @@
   <header class="hero">
     <div class="wrap hero-grid">
       <div class="hero-inner">
-        <span class="eyebrow">Thiès, Sénégal</span>
-        <h1>Malick</h1>
-        <p class="role">Développeur Full-Stack</p>
+        <span class="eyebrow">Thiès, Sénégal · missions à distance</span>
+        <h1>Malick Ba</h1>
+        <p class="role">Développeur Full-Stack · Web &amp; Mobile</p>
         <p class="lede">
-          Je construis des systèmes qui tiennent la route : backend,
-          intégrations complexes et applications mobiles, toujours avec
-          l'envie de comprendre ce qui se passe sous le capot.
+          Je conçois et développe vos plateformes web, applications mobiles
+          et backends temps réel, de la maquette à la mise en production,
+          avec un code documenté que votre équipe pourra reprendre.
         </p>
         <div class="hero-cta">
-          <a href="#projects" class="btn btn-primary">Voir mes projets →</a>
-          <a href="#contact" class="btn btn-ghost">Me contacter</a>
+          <a href="#contact" class="btn btn-primary">Discuter de votre projet →</a>
+          <a href="#projects" class="btn btn-ghost">Voir mes projets</a>
         </div>
         <div class="status-line">
-          <span class="status-dot"></span>
-          Candidat au Master IA / Big Data, UGB · réponse en attente
+          <span class="status-dot available"></span>
+          Disponible pour missions freelance · 100 % à distance · GMT (1 h de Paris)
         </div>
       </div>
       <div class="hero-photo">
@@ -957,9 +1016,11 @@
             reconstruire à froid.
           </p>
           <p>
-            Le code le plus solide que j'ai écrit, je ne l'ai jamais écrit
-            seul. C'est le plus souvent en binôme durable avec
-            <strong>Alpha Oumar Diallo</strong>.
+            Je prends en charge le backend, les intégrations temps réel et
+            le mobile de bout en bout, et je sais m'intégrer à une équipe :
+            la plupart de mes projets sont menés en binôme avec
+            <strong>Alpha Oumar Diallo</strong>, sur un même dépôt et des
+            conventions partagées.
           </p>
         </div>
         <div class="chip-cluster">
@@ -973,6 +1034,45 @@
         <li><span class="k">Formation</span><span>Licence Développement et Administration d'Applications Web (D2A) — UFR SATIC, Université Alioune Diop de Bambey (UADB)</span></li>
         <li><span class="k">Prochaine étape</span><span>Master IA / Big Data — Université Gaston Berger (UGB)<span class="badge">en attente</span></span></li>
       </ul>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Services</span>
+        <h2>Ce que je peux faire pour vous</h2>
+      </div>
+      <div class="service-grid">
+        <article class="service-card">
+          <span class="service-num">01</span>
+          <h3>Plateformes web</h3>
+          <p>Applications métier, espaces clients, back-offices et tableaux de bord, avec authentification, rôles et paiement.</p>
+          <div class="stack-row"><span class="chip">Next.js</span><span class="chip">Laravel</span><span class="chip">PostgreSQL</span></div>
+        </article>
+        <article class="service-card">
+          <span class="service-num">02</span>
+          <h3>Applications mobiles</h3>
+          <p>Apps Android et iOS à partir d'une seule base de code, connectées à votre API, avec notifications, visio et gestion de comptes.</p>
+          <div class="stack-row"><span class="chip">Flutter</span><span class="chip">React Native</span><span class="chip">Firebase</span></div>
+        </article>
+        <article class="service-card">
+          <span class="service-num">03</span>
+          <h3>API &amp; temps réel</h3>
+          <p>Backends REST, enchères, messagerie et mises à jour en direct, intégrations de services tiers, conteneurisation.</p>
+          <div class="stack-row"><span class="chip">Node.js</span><span class="chip">Socket.io</span><span class="chip">Docker</span></div>
+        </article>
+      </div>
+
+      <div class="process">
+        <span class="eyebrow">Comment je travaille</span>
+        <ol class="process-steps">
+          <li><b>Échange</b><span>Un appel pour cerner votre besoin et vos contraintes.</span></li>
+          <li><b>Devis</b><span>Périmètre, étapes et délais écrits noir sur blanc.</span></li>
+          <li><b>Sprints</b><span>Une démo à chaque étape, sur un environnement de test.</span></li>
+          <li><b>Livraison</b><span>Mise en ligne, code source et documentation remis.</span></li>
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -1024,10 +1124,10 @@
       id: "douane-encheres",
       title: "Douane Enchères SN",
       desc: "Plateforme d'enchères en ligne pour les véhicules saisis par la douane, avec mises en temps réel pour les acheteurs du Port de Dakar.",
-      role: "Backend, application mobile compagnon, intégrations temps réel (Socket.io).",
+      role: "Backend des enchères en temps réel (Socket.io), application mobile compagnon pour les acheteurs.",
       stack: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Socket.io", "React Native"],
       team: ["Alpha Oumar Diallo"],
-      extra: [["Note", "16/20"], ["Déploiement", "Production — Render"]],
+      extra: [["Statut", "En production — Render"]],
       images: [
         { src: "assets/projects/douane-encheres/01-dashboard-igf.png", alt: "Tableau de bord agent IGF de Douane Enchères SN, avec adjudications, cautions séquestrées et conformité des paiements" },
         { src: "assets/projects/douane-encheres/02-dashboard-agent.png", alt: "Tableau de bord d'un agent douane sur Douane Enchères SN, avec les voitures à traiter et les sessions en cours" },
@@ -1035,10 +1135,20 @@
       ],
     },
     {
+      id: "ndaanaan-institut",
+      title: "NDAANAAN Institut",
+      desc: "Commande client : plateforme d'enseignement islamique à distance (Coran, Fiqh, arabe), avec application élèves/enseignants, back-office du directeur et API.",
+      role: "Tout l'espace élève de l'app mobile (inscription, cours, visio, notifications, profil) et la partie pédagogie du back-office.",
+      stack: ["Flutter", "Riverpod", "Laravel 12", "Next.js", "Firebase", "Figma"],
+      team: ["Alpha Oumar Diallo"],
+      extra: [["Statut", "Commande client — en développement"]],
+      video: { src: "assets/videos/ndaanaan-institut-demo.mp4", poster: "assets/projects/ndaanaan-institut/poster.jpg", alt: "Prototype de l'application NDAANAAN Institut, écran d'accueil élève / enseignant" },
+    },
+    {
       id: "natt-bi",
       title: "Natt-Bi (Tontine App)",
       desc: "Application de gestion de tontines : cycles de cotisation, membres et suivi des tours de versement.",
-      role: "Modèles Eloquent, relations entre entités, vues Blade pour la gestion des cycles.",
+      role: "Modèle de données des tontines (membres, cycles, cotisations) et écrans de gestion des cycles.",
       stack: ["Laravel 11", "PostgreSQL", "Eloquent", "Blade"],
       team: ["Alpha Oumar Diallo", "Sira", "El Hadj"],
       extra: [],
@@ -1051,23 +1161,13 @@
       id: "buntu-liggeey",
       title: "buntu-liggeey",
       desc: "Application desktop de mise en relation pour l'emploi, pensée pour les jeunes sans réseau professionnel.",
-      role: "Modélisation UML du domaine, couche de persistance JDBC.",
+      role: "Conception du modèle métier (UML) et de toute la couche d'accès aux données.",
       stack: ["Java 21", "JavaFX", "JDBC", "MySQL"],
       team: [],
       extra: [],
       images: [
         { src: "assets/projects/buntu-liggeey/01-dashboard-admin.png", alt: "Tableau de bord administrateur de buntu-liggeey, avec statistiques des talents, entreprises et offres" },
       ],
-    },
-    {
-      id: "ndaanaan-institut",
-      title: "NDAANAAN Institut",
-      desc: "Centre d'enseignement islamique à distance (Coran, Fiqh, arabe) — maquette Figma pour une commande client, en attente de validation avant développement.",
-      role: "Design UI/UX (Figma).",
-      stack: ["Figma"],
-      team: [],
-      extra: [["Statut", "Maquette — en attente de validation"]],
-      video: { src: "assets/videos/ndaanaan-institut-demo.mp4", poster: "assets/projects/ndaanaan-institut/poster.jpg", alt: "Prototype Figma de l'application NDAANAAN Institut, écran d'accueil élève / enseignant" },
     },
     {
       id: "nour",
@@ -1085,14 +1185,12 @@
 
   const SKILLS = {
     "Backend": ["Node.js / Express", "Laravel", "API REST", "Socket.io", "Java"],
-    "Frontend & Mobile": ["Next.js", "React", "React Native", "TypeScript", "JavaFX"],
+    "Frontend & Mobile": ["Next.js", "React", "Flutter", "React Native", "TypeScript", "JavaFX"],
     "Data": ["PostgreSQL", "MySQL", "Prisma", "Eloquent ORM", "Modélisation UML"],
-    "Outils": ["Git / GitHub", "Docker", "Postman", "Render", "VS Code"],
-    "Savoir-être": ["Travail en binôme", "Curiosité technique", "Rigueur", "Autonomie"],
+    "Outils": ["Git / GitHub", "Docker", "Firebase", "Render", "Figma"],
     // AJOUTER UNE COMPÉTENCE ICI ↓ (dans le tableau de la bonne catégorie)
   };
 
-  // À REMPLACER : coordonnées réelles avant mise en ligne.
   const CONTACT = [
     { label: "Email", value: "malick1.ba@uadb.edu.sn", href: "mailto:malick1.ba@uadb.edu.sn" },
     { label: "GitHub", value: "github.com/Dev-knowladge", href: "https://github.com/Dev-knowladge" },
@@ -1223,7 +1321,7 @@
 
   /* ---- Nav active au scroll ---- */
   const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
-  const sections = ["about", "projects", "skills", "contact"].map((id) => document.getElementById(id));
+  const sections = ["about", "services", "projects", "skills", "contact"].map((id) => document.getElementById(id));
   const navObserver = new IntersectionObserver(
     (entries) => {
       let best = null;
@@ -1399,7 +1497,7 @@
     </div>
     <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
     <div class="chat-suggestions" id="chatSuggestions">
-      <button type="button" class="chat-chip">Quelles technos maîtrise-t-il ?</button>
+      <button type="button" class="chat-chip">Est-il disponible pour une mission ?</button>
       <button type="button" class="chat-chip">Parle-moi du projet douane</button>
       <button type="button" class="chat-chip">Comment le contacter ?</button>
     </div>
